@@ -33,7 +33,7 @@ FSMCodingStyle=eFMSDropDownList_OneProcess
 FSMEncodingStyle=eFMSDropDownList_OneHot
 IsProjectConflictPreventionWarningsEnabled=0
 ConstraintManagerFlow=0
-IsVirtualBomDocumentRemoved=0
+IsVirtualBomDocumentRemoved=1
 OutputPath=
 LogFolderPath=
 ManagedProjectGUID=
@@ -203,6 +203,23 @@ GenerateClassCluster=0
 DocumentUniqueId=
 
 [Document10]
+DocumentPath=..\..\..\..\Desktop\UNI\Q6\INFO\AD\LCD2X16\LCD2X16.SchLib
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=KLCBVKZK
+
+[Document11]
 DocumentPath=..\..\CommonFiles\Altium_Libraries_e-Tech_Racing\Schematics\Electromechanical.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -219,7 +236,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document11]
+[Document12]
 DocumentPath=..\..\CommonFiles\Altium_Libraries_e-Tech_Racing\Schematics\e-Tech_Racing.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -236,7 +253,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document12]
+[Document13]
 DocumentPath=..\..\CommonFiles\Altium_Libraries_e-Tech_Racing\Schematics\Filter components.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -253,7 +270,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document13]
+[Document14]
 DocumentPath=..\..\CommonFiles\Altium_Libraries_e-Tech_Racing\Schematics\Integrated circuits.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -270,7 +287,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document14]
+[Document15]
 DocumentPath=..\..\CommonFiles\Altium_Libraries_e-Tech_Racing\Schematics\Passives.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -287,7 +304,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document15]
+[Document16]
 DocumentPath=..\..\CommonFiles\Altium_Libraries_e-Tech_Racing\Schematics\Semiconductor.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -304,7 +321,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document16]
+[Document17]
 DocumentPath=..\..\CommonFiles\Altium_Libraries_e-Tech_Racing\Schematics\Sensors.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -321,7 +338,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document17]
+[Document18]
 DocumentPath=[1] Supply.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -338,7 +355,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=JXUJENOV
 
-[Document18]
+[Document19]
 DocumentPath=[2] MCU.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -355,7 +372,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=FDTVAAEC
 
-[Document19]
+[Document20]
 DocumentPath=[3] ADC.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -372,17 +389,51 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=YDERXGKR
 
+[Document21]
+DocumentPath=AT89C5131.SchLib
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=FAJZBPCN
+
+[Document22]
+DocumentPath=[4] Ports.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=EMRBBZSG
+
 [Parameter1]
 Name=AUTHORS
 Value=Bernat Canota, Yosra Azzouz, Carmen Unió, Inass Himiche
 
 [Parameter2]
-Name=Project
-Value=AD
-
-[Parameter3]
 Name=Company
 Value=UPC EEBE
+
+[Parameter3]
+Name=Project
+Value=AD
 
 [Configuration1]
 Name=Sources
@@ -1360,24 +1411,29 @@ Net4=NetName=CLK|NetColor=$00FFFF6E
 Net5=NetName=CS|NetColor=$00FFFF6E
 Net6=NetName=D-|NetColor=$000083FD
 Net7=NetName=D+|NetColor=$000083FD
-Net8=NetName=ECHO|NetColor=$00FFFF6E
-Net9=NetName=FC_Inf|NetColor=$00FF6E6E
-Net10=NetName=FC_Sup|NetColor=$00FF6E6E
-Net11=NetName=GND|NetColor=$00908D91
-Net12=NetName=HUM_T|NetColor=clYellow
-Net13=NetName=LV+in|NetColor=$006E6EFF
-Net14=NetName=MISO|NetColor=$00FFFF6E
-Net15=NetName=MOSI|NetColor=$00FFFF6E
-Net16=NetName=NTC_H|NetColor=clYellow
-Net17=NetName=NTC_T|NetColor=clYellow
-Net18=NetName=Persiana-|NetColor=$006EFF6E
-Net19=NetName=Persiana+|NetColor=$006EFF6E
-Net20=NetName=Rele1-|NetColor=$006EFF6E
-Net21=NetName=Rele1+|NetColor=$006EFF6E
-Net22=NetName=Rele2|NetColor=$006EFF6E
-Net23=NetName=Rele3|NetColor=$006EFF6E
-Net24=NetName=TRIG|NetColor=$00FFFF6E
-Net25=NetName=Ventilador|NetColor=$006EFF6E
+Net8=NetName=DOWN|NetColor=$00FF6E6E
+Net9=NetName=ECHO|NetColor=$00FFFF6E
+Net10=NetName=FC_Inf|NetColor=$00FF6E6E
+Net11=NetName=FC_Sup|NetColor=$00FF6E6E
+Net12=NetName=GND|NetColor=$00908D91
+Net13=NetName=HUM_T|NetColor=clYellow
+Net14=NetName=LEFT|NetColor=$00FF6E6E
+Net15=NetName=LV+in|NetColor=$006E6EFF
+Net16=NetName=MISO|NetColor=$00FFFF6E
+Net17=NetName=MOSI|NetColor=$00FFFF6E
+Net18=NetName=NTC_H|NetColor=clYellow
+Net19=NetName=NTC_T|NetColor=clYellow
+Net20=NetName=OK|NetColor=$00FF6E6E
+Net21=NetName=Persiana-|NetColor=$006EFF6E
+Net22=NetName=Persiana+|NetColor=$006EFF6E
+Net23=NetName=Rele1-|NetColor=$006EFF6E
+Net24=NetName=Rele1+|NetColor=$006EFF6E
+Net25=NetName=Rele2|NetColor=$006EFF6E
+Net26=NetName=Rele3|NetColor=$006EFF6E
+Net27=NetName=RIGHT|NetColor=$00FF6E6E
+Net28=NetName=TRIG|NetColor=$00FFFF6E
+Net29=NetName=UP|NetColor=$00FF6E6E
+Net30=NetName=Ventilador|NetColor=$006EFF6E
 
 [Comparison Options]
 ComparisonOptions0=Kind=Net|MinPercent=75|MinMatch=3|ShowMatch=0|UseName=-1|InclAllRules=0
