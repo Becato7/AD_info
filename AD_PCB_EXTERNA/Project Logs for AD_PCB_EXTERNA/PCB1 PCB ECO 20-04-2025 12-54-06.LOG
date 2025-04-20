@@ -1,0 +1,45 @@
+Removed Pin From Net: NetName=NTC_H Pin=J1-1
+Removed Pin From Net: NetName=HUM_T Pin=J1-3
+Removed Pin From Net: NetName=UP Pin=J5-1
+Removed Pin From Net: NetName=OK Pin=J5-2
+Added Pin To Net: NetName=HUM_T Pin=J1-1
+Added Pin To Net: NetName=NTC_H Pin=J1-3
+Added Pin To Net: NetName=Bomba Pin=J5-1
+Added Pin To Net: NetName=UP Pin=J5-1
+Added Pin To Net: NetName=GND Pin=J5-2
+Added Pin To Net: NetName=OK Pin=J5-2
+Add Pin To Net: Unknown Pin: Pin J5-3
+Add Pin To Net: Unknown Pin: Pin J5-4
+Add Pin To Net: Unknown Pin: Pin J5-5
+Add Pin To Net: Unknown Pin: Pin J5-6
+Add Pin To Net: Unknown Pin: Pin J5-7
+Add Pin To Net: Unknown Pin: Pin J5-13
+Add Pin To Net: Unknown Pin: Pin J5-14
+Add Pin To Net: Unknown Pin: Pin J5-15
+Add Pin To Net: Unknown Pin: Pin J5-16
+Add Pin To Net: Unknown Pin: Pin J5-17
+Add Pin To Net: Unknown Pin: Pin J5-18
+Add Pin To Net: Unknown Pin: Pin J5-19
+Add Pin To Net: Unknown Pin: Pin J5-20
+Add Pin To Net: Unknown Pin: Pin J5-21
+Add Pin To Net: Unknown Pin: Pin J5-22
+Add Pin To Net: Unknown Pin: Pin J5-23
+Add Pin To Net: Unknown Pin: Pin J5-24
+Add Pin To Net: Unknown Pin: Pin J5-25
+Add Pin To Net: Unknown Pin: Pin J5-26
+Add Pin To Net: Unknown Pin: Pin J5-27
+Add Pin To Net: Unknown Pin: Pin J5-29
+Add Pin To Net: Unknown Pin: Pin J5-30
+Add Pin To Net: Unknown Pin: Pin J5-31
+Add Pin To Net: Unknown Pin: Pin J5-32
+Add Pin To Net: Unknown Pin: Pin J5-33
+Add Pin To Net: Unknown Pin: Pin J5-34
+Add Pin To Net: Unknown Pin: Pin J5-37
+Add Pin To Net: Unknown Pin: Pin J5-38
+Add Pin To Net: Unknown Pin: Pin J5-39
+Add Pin To Net: Unknown Pin: Pin J5-40
+Change Net Color : Old Net Color=RGB(253, 131, 0) New Net Color=Default
+Change Net Color : Old Net Color=RGB(253, 131, 0) New Net Color=Default
+Change Net Color : Old Net Color=RGB(253, 131, 0) New Net Color=Default
+Change Net Color : Old Net Color=RGB(253, 131, 0) New Net Color=Default
+Added Member To Class: ClassName=AD_PCB_EXTERNA Member=Component J5 2x20_connector

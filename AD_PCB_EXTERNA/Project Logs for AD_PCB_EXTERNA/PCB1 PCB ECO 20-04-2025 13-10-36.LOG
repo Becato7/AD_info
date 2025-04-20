@@ -1,0 +1,39 @@
+Removed Pin From Net: NetName=UP Pin=J5-1
+Removed Pin From Net: NetName=OK Pin=J5-2
+Change Component Designator: OldDesignator=J6 NewDesignator=J7
+Change Component Designator: OldDesignator=J7 NewDesignator=J8
+Added Pin To Net: NetName=Bomba Pin=J5-1
+Added Pin To Net: NetName=GND Pin=J5-2
+Add Pin To Net: Unknown Pin: Pin J6-1
+Add Pin To Net: Unknown Pin: Pin J6-2
+Add Pin To Net: Unknown Pin: Pin J6-3
+Add Pin To Net: Unknown Pin: Pin J6-4
+Add Pin To Net: Unknown Pin: Pin J6-5
+Add Pin To Net: Unknown Pin: Pin J6-6
+Add Pin To Net: Unknown Pin: Pin J6-7
+Add Pin To Net: Unknown Pin: Pin J6-13
+Add Pin To Net: Unknown Pin: Pin J6-14
+Add Pin To Net: Unknown Pin: Pin J6-15
+Add Pin To Net: Unknown Pin: Pin J6-16
+Add Pin To Net: Unknown Pin: Pin J6-17
+Add Pin To Net: Unknown Pin: Pin J6-18
+Add Pin To Net: Unknown Pin: Pin J6-19
+Add Pin To Net: Unknown Pin: Pin J6-20
+Add Pin To Net: Unknown Pin: Pin J6-21
+Add Pin To Net: Unknown Pin: Pin J6-22
+Add Pin To Net: Unknown Pin: Pin J6-23
+Add Pin To Net: Unknown Pin: Pin J6-24
+Add Pin To Net: Unknown Pin: Pin J6-25
+Add Pin To Net: Unknown Pin: Pin J6-26
+Add Pin To Net: Unknown Pin: Pin J6-27
+Add Pin To Net: Unknown Pin: Pin J6-29
+Add Pin To Net: Unknown Pin: Pin J6-30
+Add Pin To Net: Unknown Pin: Pin J6-31
+Add Pin To Net: Unknown Pin: Pin J6-32
+Add Pin To Net: Unknown Pin: Pin J6-33
+Add Pin To Net: Unknown Pin: Pin J6-34
+Add Pin To Net: Unknown Pin: Pin J6-37
+Add Pin To Net: Unknown Pin: Pin J6-38
+Add Pin To Net: Unknown Pin: Pin J6-39
+Add Pin To Net: Unknown Pin: Pin J6-40
+Added Member To Class: ClassName=AD_PCB_EXTERNA Member=Component J8 J_NanoFit_1x2
