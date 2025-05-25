@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=DOWN Pin=TP_DOWN-1
+Removed Pin From Net: NetName=LEFT Pin=TP_LEFT-1
+Removed Pin From Net: NetName=OK Pin=TP_OK-1
+Removed Pin From Net: NetName=RIGHT Pin=TP_RIGHT-1
+Removed Pin From Net: NetName=UP Pin=TP_UP-1
+Removed Member From Class: ClassName=AD_PCB_EXTERNA Member=TP_DOWN
+Removed Member From Class: ClassName=AD_PCB_EXTERNA Member=TP_LEFT
+Removed Member From Class: ClassName=AD_PCB_EXTERNA Member=TP_OK
+Removed Member From Class: ClassName=AD_PCB_EXTERNA Member=TP_RIGHT
+Removed Member From Class: ClassName=AD_PCB_EXTERNA Member=TP_UP

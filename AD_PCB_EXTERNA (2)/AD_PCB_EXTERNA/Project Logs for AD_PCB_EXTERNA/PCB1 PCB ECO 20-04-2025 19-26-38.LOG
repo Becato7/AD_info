@@ -1,0 +1,50 @@
+Change Component Designator: OldDesignator=D101 NewDesignator=D104
+Change Component Designator: OldDesignator=D102 NewDesignator=D105
+Change Component Designator: OldDesignator=D103 NewDesignator=D106
+Change Component Designator: OldDesignator=D104 NewDesignator=D107
+Add Pin To Net: Unknown Pin: Pin J6-1
+Add Pin To Net: Unknown Pin: Pin J6-2
+Add Pin To Net: Unknown Pin: Pin J6-3
+Add Pin To Net: Unknown Pin: Pin J6-4
+Add Pin To Net: Unknown Pin: Pin J6-5
+Add Pin To Net: Unknown Pin: Pin J6-6
+Add Pin To Net: Unknown Pin: Pin J6-7
+Add Pin To Net: Unknown Pin: Pin J6-13
+Add Pin To Net: Unknown Pin: Pin J6-14
+Add Pin To Net: Unknown Pin: Pin J6-15
+Add Pin To Net: Unknown Pin: Pin J6-16
+Add Pin To Net: Unknown Pin: Pin J6-17
+Add Pin To Net: Unknown Pin: Pin J6-18
+Add Pin To Net: Unknown Pin: Pin J6-19
+Add Pin To Net: Unknown Pin: Pin J6-20
+Add Pin To Net: Unknown Pin: Pin J6-21
+Add Pin To Net: Unknown Pin: Pin J6-22
+Add Pin To Net: Unknown Pin: Pin J6-23
+Add Pin To Net: Unknown Pin: Pin J6-24
+Add Pin To Net: Unknown Pin: Pin J6-25
+Add Pin To Net: Unknown Pin: Pin J6-26
+Add Pin To Net: Unknown Pin: Pin J6-27
+Add Pin To Net: Unknown Pin: Pin J6-29
+Add Pin To Net: Unknown Pin: Pin J6-30
+Add Pin To Net: Unknown Pin: Pin J6-31
+Add Pin To Net: Unknown Pin: Pin J6-32
+Add Pin To Net: Unknown Pin: Pin J6-33
+Add Pin To Net: Unknown Pin: Pin J6-34
+Add Pin To Net: Unknown Pin: Pin J6-37
+Add Pin To Net: Unknown Pin: Pin J6-38
+Add Pin To Net: Unknown Pin: Pin J6-39
+Add Pin To Net: Unknown Pin: Pin J6-40
+Change Net Name : Old Net Name=NetD103_K New Net Name=NetD106_K
+Change Net Name : Old Net Name=NetD104_K New Net Name=NetD107_K
+Added Pin To Net: NetName=NetD104_K Pin=D104-K
+Added Pin To Net: NetName=NetD104_K Pin=K101-A1
+Added Pin To Net: NetName=NetD104_K Pin=Q101-E
+Added Net: Name=NetD104_K
+Added Pin To Net: NetName=NetD105_K Pin=D105-K
+Added Pin To Net: NetName=NetD105_K Pin=K102-A1
+Added Pin To Net: NetName=NetD105_K Pin=Q102-E
+Added Net: Name=NetD105_K
+Added Member To Class: ClassName=AD_PCB_EXTERNA Member=Component D105 DSC-0.5/30-SOD123
+Added Member To Class: ClassName=AD_PCB_EXTERNA Member=Component D106 DSC-0.5/30-SOD123
+Added Member To Class: ClassName=AD_PCB_EXTERNA Member=Component D107 DSC-0.5/30-SOD123
+Add Class Member: Failed to add class member : Component J6 2x20_connector

@@ -1,0 +1,47 @@
+Removed Pin From Net: NetName=GND Pin=TP_GND-1
+Removed Member From Class: ClassName=AD_PCB_EXTERNA Member=TP_GND
+Added Component: Designator=J6(CONN_7024640xx_MOL)
+Add component (AddParameter): Name = "Case/Package"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Connector Type"; Value = "BOARD CONNECTOR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Gender"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Current Rating"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Operating Temperature"; Value = "120°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Operating Temperature"; Value = "-55°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = "Board"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pins"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS Compliant"; Value = "Yes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage Rating"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=UP Pin=J6-1
+Added Pin To Net: NetName=OK Pin=J6-2
+Added Pin To Net: NetName=DOWN Pin=J6-3
+Added Pin To Net: NetName=LEFT Pin=J6-4
+Added Pin To Net: NetName=RIGHT Pin=J6-5
+Added Pin To Net: NetName=FC_Sup Pin=J6-6
+Added Pin To Net: NetName=CS Pin=J6-13
+Added Pin To Net: NetName=MISO Pin=J6-14
+Added Pin To Net: NetName=CLK Pin=J6-15
+Added Pin To Net: NetName=MOSI Pin=J6-16
+Added Pin To Net: NetName=LED_REG Pin=J6-17
+Added Pin To Net: NetName=LED_FALTA_AIGUA Pin=J6-18
+Added Pin To Net: NetName=RELE1 Pin=J6-19
+Added Pin To Net: NetName=RELE2 Pin=J6-20
+Added Pin To Net: NetName=RELE3 Pin=J6-21
+Added Pin To Net: NetName=RELE4 Pin=J6-22
+Added Pin To Net: NetName=ECHO Pin=J6-24
+Added Pin To Net: NetName=LCD_0 Pin=J6-25
+Added Pin To Net: NetName=LCD_1 Pin=J6-26
+Added Pin To Net: NetName=LCD_2 Pin=J6-27
+Added Pin To Net: NetName=LCD_4 Pin=J6-29
+Added Pin To Net: NetName=LCD_5 Pin=J6-30
+Added Pin To Net: NetName=LCD_6 Pin=J6-31
+Added Pin To Net: NetName=LCD_7 Pin=J6-32
+Added Pin To Net: NetName=SCL Pin=J6-33
+Added Pin To Net: NetName=SDA Pin=J6-34
+Added Pin To Net: NetName=+5 Pin=J6-37
+Added Pin To Net: NetName=GND Pin=J6-38
+Added Pin To Net: NetName=+5 Pin=J6-39
+Added Pin To Net: NetName=GND Pin=J6-40
+Added Member To Class: ClassName=AD_PCB_EXTERNA Member=Component D101 LEDYS-0805-120
+Added Member To Class: ClassName=AD_PCB_EXTERNA Member=Component D102 LEDRS-0805-150
+Added Member To Class: ClassName=AD_PCB_EXTERNA Member=Component D103 LEDGS-1206-450
+Added Member To Class: ClassName=AD_PCB_EXTERNA Member=Component J6 70246-4001

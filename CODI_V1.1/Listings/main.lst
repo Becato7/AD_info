@@ -1,0 +1,81 @@
+C51 COMPILER V9.59.0.0   MAIN                                                              05/25/2025 20:20:21 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          
+   2          /*****************************************************************************/
+   3          /* Fichero     - main_lcd.c                                                  */
+   4          /* Descripcion - Codi principal de la AD                                     */
+   5          /* Autor       - Bernat Carnota                                              */
+   6          /* Fecha       - 29/04/2025                                                  */
+   7          /*****************************************************************************/
+   8          
+   9          #include <AT89C5131.h> 
+  10          #include "lcd.h"
+  11          #include "LTC.h"
+  12          
+  13          //PORT 0
+  14          sbit fc_inf = P0^6;
+  15          sbit fc_sup = P0^5;
+  16          sbit sw_right = P0^4;
+  17          sbit sw_left = P0^3;
+  18          sbit sw_down = P0^2;
+  19          sbit sw_ok = P0^1;
+  20          sbit sw_up = P0^0;
+  21          
+  22          //PORT 2
+  23          sbit ECHO = P2^7;
+  24          sbit TRIG = P2^6;
+  25          sbit RELE4 = P2^5;
+  26          sbit RELE3 = P2^4;
+  27          sbit RELE2 = P2^3;
+  28          sbit RELE1 = P2^2;
+  29          sbit LED_AIGUA = P2^1;
+  30          sbit LED_REG = P2^0;
+  31          
+  32          
+  33          
+  34          
+  35          /*--------------------*/
+  36          /* programa principal */
+  37          /*--------------------*/
+  38          
+  39          void main(void)
+  40          {
+  41   1        unsigned int adc_val;
+  42   1        float volts;
+  43   1        unsigned char code linea1[16] = {' ','H','E','L','L','O',' ','B','A','R','C','E','L','O','N','A'};
+  44   1        unsigned char code linea2[16] = {' ','I','I','E','I','A',' ','2','0','2','4',' ',' ',' ',' ',' '};
+  45   1        
+  46   1        SPI_Init();
+  47   1        LCD_BEGIN(linea1, linea2);
+  48   1      
+  49   1        while(1)
+  50   1        {   
+  51   2              adc_val = LTC_ReadChannel(0xC7);  // canal 0
+  52   2              volts = convert_to_voltage(adc_val);
+  53   2        }
+  54   1      }
+C51 COMPILER V9.59.0.0   MAIN                                                              05/25/2025 20:20:21 PAGE 2   
+
+  55          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     43    ----
+   CONSTANT SIZE    =     32    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

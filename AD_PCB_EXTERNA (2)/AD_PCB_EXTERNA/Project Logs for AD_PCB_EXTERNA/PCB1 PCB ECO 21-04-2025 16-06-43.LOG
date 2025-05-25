@@ -1,0 +1,4 @@
+Change Component Designator: OldDesignator=TP_CLK NewDesignator=CLK
+Change Component Designator: OldDesignator=TP_CS NewDesignator=CS
+Change Component Designator: OldDesignator=TP_MISO NewDesignator=MISO
+Change Component Designator: OldDesignator=TP_MOSI NewDesignator=MOSI
