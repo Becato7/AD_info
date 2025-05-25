@@ -1,9 +1,9 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    05/25/2025  20:20:21  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    05/25/2025  20:55:05  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
-C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\lcd.obj, .\Objects\LTC.obj TO .\Objects\V1.1 PRINT (.\Listings
->> \V1.m51) RAMSIZE (256)
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\lcd.obj, .\Objects\LTC.obj, .\Objects\MCP.obj TO .\Objects\V1.
+>> 1 PRINT (.\Listings\V1.m51) RAMSIZE (256)
 
 
 MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
@@ -13,6 +13,7 @@ INPUT MODULES INCLUDED:
   .\Objects\main.obj (MAIN)
   .\Objects\lcd.obj (LCD)
   .\Objects\LTC.obj (LTC)
+  .\Objects\MCP.obj (MCP)
   C:\KEIL_V5\C51\LIB\C51FPS.LIB (?C?FPMUL)
   C:\KEIL_V5\C51\LIB\C51FPS.LIB (?C?FPDIV)
   C:\KEIL_V5\C51\LIB\C51FPS.LIB (?C?FCAST)
@@ -30,70 +31,81 @@ LINK MAP OF MODULE:  .\Objects\V1.1 (MAIN)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            DATA    0008H     000EH     UNIT         _DATA_GROUP_
-            IDATA   0016H     0001H     UNIT         ?STACK
+            DATA    0008H     000AH     UNIT         _DATA_GROUP_
+            IDATA   0012H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
                     0003H     07FDH                  *** GAP ***
             CODE    0800H     0269H     UNIT         ?C?LIB_CODE
             CODE    0A69H     007BH     UNIT         ?PR?LCD_INICIALIZAR?LCD
-            CODE    0AE4H     0052H     UNIT         ?PR?_LCD_BEGIN?LCD
-            CODE    0B36H     0045H     UNIT         ?PR?_LCD_ENVIAR_COMANDO?LCD
-            CODE    0B7BH     002BH     UNIT         ?PR?MAIN?MAIN
-            CODE    0BA6H     0020H     UNIT         ?CO?MAIN
-            CODE    0BC6H     0020H     UNIT         ?PR?_LCD_RETARDO_MS?LCD
-            CODE    0BE6H     001DH     UNIT         ?PR?_LTC_READCHANNEL?LTC
-            CODE    0C03H     001CH     UNIT         ?PR?_CONVERT_TO_VOLTAGE?LTC
-            CODE    0C1FH     0015H     UNIT         ?PR?_LCD_SITUAR_CURSOR?LCD
-            CODE    0C34H     0014H     UNIT         ?PR?_LCD_ESCRIBIR_CARACTER?LCD
-            CODE    0C48H     0010H     UNIT         ?PR?LCD_ESPERAR_BF?LCD
-            CODE    0C58H     000CH     UNIT         ?C_C51STARTUP
-            CODE    0C64H     000AH     UNIT         ?PR?_SPI_TRANSFER?LTC
-            CODE    0C6EH     0007H     UNIT         ?PR?SPI_INIT?LTC
-            CODE    0C75H     0006H     UNIT         ?PR?LCD_BORRAR?LCD
+            CODE    0AE4H     0062H     UNIT         ?PR?_LTC_READCHANNEL?LTC
+            CODE    0B46H     0052H     UNIT         ?PR?_LCD_BEGIN?LCD
+            CODE    0B98H     0045H     UNIT         ?PR?_LCD_ENVIAR_COMANDO?LCD
+            CODE    0BDDH     0032H     UNIT         ?PR?MAIN?MAIN
+            CODE    0C0FH     002CH     UNIT         ?PR?_MCP3302_READCHANNEL?MCP
+            CODE    0C3BH     002AH     UNIT         ?PR?_MCP3302_CONVERTTOVOLTAGE?MCP
+            CODE    0C65H     0020H     UNIT         ?CO?MAIN
+            CODE    0C85H     0020H     UNIT         ?PR?_LCD_RETARDO_MS?LCD
+            CODE    0CA5H     001CH     UNIT         ?PR?_CONVERT_TO_VOLTAGE?LTC
+            CODE    0CC1H     0015H     UNIT         ?PR?_LCD_SITUAR_CURSOR?LCD
+            CODE    0CD6H     0014H     UNIT         ?PR?_LCD_ESCRIBIR_CARACTER?LCD
+            CODE    0CEAH     0010H     UNIT         ?PR?LCD_ESPERAR_BF?LCD
+            CODE    0CFAH     000CH     UNIT         ?C_C51STARTUP
+            CODE    0D06H     000AH     UNIT         ?PR?_SPI_TRANSFER?LTC
+            CODE    0D10H     0007H     UNIT         ?PR?SPI_INIT?LTC
+            CODE    0D17H     0007H     UNIT         ?PR?MCP3302_INIT?MCP
+            CODE    0D1EH     0006H     UNIT         ?PR?LCD_BORRAR?LCD
 
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:55:05  PAGE 2
 
 
 OVERLAY MAP OF MODULE:   .\Objects\V1.1 (MAIN)
 
 
-SEGMENT                                  DATA_GROUP 
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:20:21  PAGE 2
-
-
-  +--> CALLED SEGMENT                  START    LENGTH
-------------------------------------------------------
-?C_C51STARTUP                          -----    -----
+SEGMENT                                     DATA_GROUP 
+  +--> CALLED SEGMENT                     START    LENGTH
+---------------------------------------------------------
+?C_C51STARTUP                             -----    -----
   +--> ?PR?MAIN?MAIN
 
-?PR?MAIN?MAIN                          0008H    0006H
+?PR?MAIN?MAIN                             0008H    0002H
   +--> ?PR?SPI_INIT?LTC
+  +--> ?PR?MCP3302_INIT?MCP
   +--> ?CO?MAIN
   +--> ?PR?_LCD_BEGIN?LCD
   +--> ?PR?_LTC_READCHANNEL?LTC
   +--> ?PR?_CONVERT_TO_VOLTAGE?LTC
+  +--> ?PR?_MCP3302_READCHANNEL?MCP
+  +--> ?PR?_MCP3302_CONVERTTOVOLTAGE?MCP
 
-?PR?_LCD_BEGIN?LCD                     000EH    0008H
+?PR?_LCD_BEGIN?LCD                        000AH    0008H
   +--> ?PR?LCD_INICIALIZAR?LCD
   +--> ?PR?_LCD_ESCRIBIR_CARACTER?LCD
   +--> ?PR?_LCD_SITUAR_CURSOR?LCD
 
-?PR?LCD_INICIALIZAR?LCD                -----    -----
+?PR?LCD_INICIALIZAR?LCD                   -----    -----
   +--> ?PR?_LCD_RETARDO_MS?LCD
   +--> ?PR?_LCD_ENVIAR_COMANDO?LCD
   +--> ?PR?LCD_ESPERAR_BF?LCD
 
-?PR?_LCD_ESCRIBIR_CARACTER?LCD         -----    -----
+?PR?_LCD_ESCRIBIR_CARACTER?LCD            -----    -----
   +--> ?PR?_LCD_ENVIAR_COMANDO?LCD
   +--> ?PR?LCD_ESPERAR_BF?LCD
 
-?PR?_LCD_SITUAR_CURSOR?LCD             -----    -----
+?PR?_LCD_SITUAR_CURSOR?LCD                -----    -----
   +--> ?PR?_LCD_ENVIAR_COMANDO?LCD
   +--> ?PR?LCD_ESPERAR_BF?LCD
 
-?PR?_LTC_READCHANNEL?LTC               -----    -----
+?PR?_LTC_READCHANNEL?LTC                  -----    -----
   +--> ?PR?_SPI_TRANSFER?LTC
+
+?PR?_MCP3302_READCHANNEL?MCP              000AH    0002H
+  +--> ?PR?_SPI_TRANSFER?LTC
+
+?PR?_MCP3302_CONVERTTOVOLTAGE?MCP         000AH    0004H
 
 
 
@@ -107,35 +119,38 @@ SYMBOL TABLE OF MODULE:  .\Objects\V1.1 (MAIN)
   D:0080H         PUBLIC        P0
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:55:05  PAGE 3
+
+
   D:00B0H         PUBLIC        P3
   D:00C0H         PUBLIC        P4
   D:00A8H         PUBLIC        IEN0
   D:00B8H         PUBLIC        IPL0
   D:00D8H         PUBLIC        CCON
-  C:0B7BH         PUBLIC        main
+  C:0BDDH         PUBLIC        main
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
   D:00F8H         PUBLIC        UEPINT
   D:00C8H         PUBLIC        T2CON
   -------         PROC          MAIN
   -------         DO            
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:20:21  PAGE 3
-
-
   D:0008H         SYMBOL        adc_val
-  D:000AH         SYMBOL        volts
-  C:0BA6H         SYMBOL        linea1
-  C:0BB6H         SYMBOL        linea2
+  D:0004H         SYMBOL        volts
+  C:0C65H         SYMBOL        linea1
+  C:0C75H         SYMBOL        linea2
   -------         ENDDO         
-  C:0B7BH         LINE#         39
-  C:0B7BH         LINE#         40
-  C:0B7BH         LINE#         46
-  C:0B7EH         LINE#         47
-  C:0B90H         LINE#         49
-  C:0B90H         LINE#         50
-  C:0B90H         LINE#         51
-  C:0B99H         LINE#         52
-  C:0BA4H         LINE#         53
+  C:0BDDH         LINE#         34
+  C:0BDDH         LINE#         35
+  C:0BDDH         LINE#         41
+  C:0BE0H         LINE#         42
+  C:0BE3H         LINE#         43
+  C:0BF5H         LINE#         45
+  C:0BF5H         LINE#         46
+  C:0BF5H         LINE#         47
+  C:0BFEH         LINE#         48
+  C:0C01H         LINE#         49
+  C:0C0AH         LINE#         50
+  C:0C0DH         LINE#         51
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
@@ -145,26 +160,29 @@ SYMBOL TABLE OF MODULE:  .\Objects\V1.1 (MAIN)
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
-  C:0B3CH         PUBLIC        _LCD_enviar_comando
+  C:0B9EH         PUBLIC        _LCD_enviar_comando
   D:00C0H         PUBLIC        P4
   B:00B0H.7       PUBLIC        BF
   D:00A8H         PUBLIC        IEN0
   B:00B0H.0       PUBLIC        EN
-  C:0C48H         PUBLIC        LCD_esperar_BF
+  C:0CEAH         PUBLIC        LCD_esperar_BF
   D:00B8H         PUBLIC        IPL0
-  C:0AE4H         PUBLIC        _LCD_BEGIN
+  C:0B46H         PUBLIC        _LCD_BEGIN
   D:00D8H         PUBLIC        CCON
   B:00B0H.2       PUBLIC        RS
   B:00B0H.1       PUBLIC        RW
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
-  C:0C3EH         PUBLIC        _LCD_escribir_caracter
-  C:0C75H         PUBLIC        LCD_borrar
+  C:0CE0H         PUBLIC        _LCD_escribir_caracter
+  C:0D1EH         PUBLIC        LCD_borrar
   C:0A69H         PUBLIC        LCD_inicializar
-  C:0C1FH         PUBLIC        _LCD_situar_cursor
+  C:0CC1H         PUBLIC        _LCD_situar_cursor
   D:00F8H         PUBLIC        UEPINT
   D:00C8H         PUBLIC        T2CON
-  C:0BC6H         PUBLIC        _LCD_retardo_ms
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:55:05  PAGE 4
+
+
+  C:0C85H         PUBLIC        _LCD_retardo_ms
   -------         PROC          LCD_INICIALIZAR
   C:0A69H         LINE#         30
   C:0A69H         LINE#         31
@@ -179,9 +197,6 @@ SYMBOL TABLE OF MODULE:  .\Objects\V1.1 (MAIN)
   C:0A99H         LINE#         46
   C:0AA2H         LINE#         47
   C:0AA5H         LINE#         48
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:20:21  PAGE 4
-
-
   C:0AA5H         LINE#         54
   C:0AAEH         LINE#         55
   C:0AB1H         LINE#         56
@@ -195,10 +210,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\V1.1 (MAIN)
   C:0ADBH         LINE#         64
   -------         ENDPROC       LCD_INICIALIZAR
   -------         PROC          LCD_BORRAR
-  C:0C75H         LINE#         75
-  C:0C75H         LINE#         76
-  C:0C75H         LINE#         77
-  C:0C78H         LINE#         78
+  C:0D1EH         LINE#         75
+  C:0D1EH         LINE#         76
+  C:0D1EH         LINE#         77
+  C:0D21H         LINE#         78
   -------         ENDPROC       LCD_BORRAR
   -------         PROC          _LCD_SITUAR_CURSOR
   D:0007H         SYMBOL        fila
@@ -206,32 +221,35 @@ SYMBOL TABLE OF MODULE:  .\Objects\V1.1 (MAIN)
   -------         DO            
   D:0007H         SYMBOL        address
   -------         ENDDO         
-  C:0C1FH         LINE#         92
-  C:0C1FH         LINE#         93
-  C:0C1FH         LINE#         95
-  C:0C27H         LINE#         96
-  C:0C31H         LINE#         97
+  C:0CC1H         LINE#         92
+  C:0CC1H         LINE#         93
+  C:0CC1H         LINE#         95
+  C:0CC9H         LINE#         96
+  C:0CD3H         LINE#         97
   -------         ENDPROC       _LCD_SITUAR_CURSOR
   -------         PROC          L?0034
   -------         ENDPROC       L?0034
   -------         PROC          _LCD_ESCRIBIR_CARACTER
   D:0007H         SYMBOL        caracter
-  C:0C3EH         LINE#         110
-  C:0C3EH         LINE#         111
-  C:0C3EH         LINE#         112
-  C:0C45H         LINE#         113
+  C:0CE0H         LINE#         110
+  C:0CE0H         LINE#         111
+  C:0CE0H         LINE#         112
+  C:0CE7H         LINE#         113
   -------         ENDPROC       _LCD_ESCRIBIR_CARACTER
   -------         PROC          _LCD_RETARDO_MS
   D:0006H         SYMBOL        ms
   -------         DO            
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:55:05  PAGE 5
+
+
   D:0004H         SYMBOL        i
   D:0002H         SYMBOL        j
   -------         ENDDO         
-  C:0BC6H         LINE#         125
-  C:0BC6H         LINE#         126
-  C:0BC6H         LINE#         129
-  C:0BD0H         LINE#         130
-  C:0BE5H         LINE#         131
+  C:0C85H         LINE#         125
+  C:0C85H         LINE#         126
+  C:0C85H         LINE#         129
+  C:0C8FH         LINE#         130
+  C:0CA4H         LINE#         131
   -------         ENDPROC       _LCD_RETARDO_MS
   -------         PROC          L?0033
   -------         ENDPROC       L?0033
@@ -239,73 +257,70 @@ SYMBOL TABLE OF MODULE:  .\Objects\V1.1 (MAIN)
   D:0007H         SYMBOL        comando
   D:0005H         SYMBOL        instr_dato
   D:0003H         SYMBOL        cuatro_ocho
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:20:21  PAGE 5
-
-
-  C:0B3CH         LINE#         145
-  C:0B3CH         LINE#         146
-  C:0B3CH         LINE#         148
-  C:0B43H         LINE#         149
-  C:0B47H         LINE#         151
-  C:0B49H         LINE#         154
-  C:0B4BH         LINE#         157
-  C:0B57H         LINE#         158
-  C:0B57H         LINE#         160
-  C:0B62H         LINE#         163
-  C:0B64H         LINE#         164
-  C:0B66H         LINE#         167
-  C:0B72H         LINE#         170
-  C:0B72H         LINE#         171
-  C:0B72H         LINE#         172
-  C:0B74H         LINE#         176
-  C:0B74H         LINE#         178
-  C:0B76H         LINE#         181
-  C:0B78H         LINE#         182
-  C:0B7AH         LINE#         183
-  C:0B7AH         LINE#         184
+  C:0B9EH         LINE#         145
+  C:0B9EH         LINE#         146
+  C:0B9EH         LINE#         148
+  C:0BA5H         LINE#         149
+  C:0BA9H         LINE#         151
+  C:0BABH         LINE#         154
+  C:0BADH         LINE#         157
+  C:0BB9H         LINE#         158
+  C:0BB9H         LINE#         160
+  C:0BC4H         LINE#         163
+  C:0BC6H         LINE#         164
+  C:0BC8H         LINE#         167
+  C:0BD4H         LINE#         170
+  C:0BD4H         LINE#         171
+  C:0BD4H         LINE#         172
+  C:0BD6H         LINE#         176
+  C:0BD6H         LINE#         178
+  C:0BD8H         LINE#         181
+  C:0BDAH         LINE#         182
+  C:0BDCH         LINE#         183
+  C:0BDCH         LINE#         184
   -------         ENDPROC       _LCD_ENVIAR_COMANDO
   -------         PROC          LCD_ESPERAR_BF
-  C:0C48H         LINE#         194
-  C:0C48H         LINE#         195
-  C:0C48H         LINE#         196
-  C:0C4AH         LINE#         197
-  C:0C4CH         LINE#         198
-  C:0C4EH         LINE#         199
-  C:0C50H         LINE#         200
-  C:0C53H         LINE#         201
-  C:0C55H         LINE#         202
-  C:0C57H         LINE#         203
+  C:0CEAH         LINE#         194
+  C:0CEAH         LINE#         195
+  C:0CEAH         LINE#         196
+  C:0CECH         LINE#         197
+  C:0CEEH         LINE#         198
+  C:0CF0H         LINE#         199
+  C:0CF2H         LINE#         200
+  C:0CF5H         LINE#         201
+  C:0CF7H         LINE#         202
+  C:0CF9H         LINE#         203
   -------         ENDPROC       LCD_ESPERAR_BF
   -------         PROC          _LCD_BEGIN
-  D:000EH         SYMBOL        linea1
-  D:0011H         SYMBOL        linea2
+  D:000AH         SYMBOL        linea1
+  D:000DH         SYMBOL        linea2
   -------         DO            
-  D:0014H         SYMBOL        i
+  D:0010H         SYMBOL        i
   -------         ENDDO         
-  C:0AE4H         LINE#         206
-  C:0AEAH         LINE#         207
-  C:0AEAH         LINE#         210
-  C:0AEDH         LINE#         213
-  C:0AF0H         LINE#         215
-  C:0AF5H         LINE#         216
-  C:0AF5H         LINE#         217
-  C:0AFEH         LINE#         218
-  C:0B0FH         LINE#         221
-  C:0B16H         LINE#         222
-  C:0B1BH         LINE#         223
-  C:0B1BH         LINE#         224
-  C:0B24H         LINE#         225
-  C:0B35H         LINE#         226
+  C:0B46H         LINE#         206
+  C:0B4CH         LINE#         207
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:55:05  PAGE 6
+
+
+  C:0B4CH         LINE#         210
+  C:0B4FH         LINE#         213
+  C:0B52H         LINE#         215
+  C:0B57H         LINE#         216
+  C:0B57H         LINE#         217
+  C:0B60H         LINE#         218
+  C:0B71H         LINE#         221
+  C:0B78H         LINE#         222
+  C:0B7DH         LINE#         223
+  C:0B7DH         LINE#         224
+  C:0B86H         LINE#         225
+  C:0B97H         LINE#         226
   -------         ENDPROC       _LCD_BEGIN
   -------         ENDMOD        LCD
-
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:20:21  PAGE 6
-
 
   -------         MODULE        LTC
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0080H         PUBLIC        P0
-  C:0BE6H         PUBLIC        _LTC_ReadChannel
+  C:0AE4H         PUBLIC        _LTC_ReadChannel
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
@@ -314,56 +329,143 @@ SYMBOL TABLE OF MODULE:  .\Objects\V1.1 (MAIN)
   D:00C4H         PUBLIC        SPSTA
   D:00A8H         PUBLIC        IEN0
   D:00B8H         PUBLIC        IPL0
-  C:0C64H         PUBLIC        _SPI_Transfer
-  C:0C03H         PUBLIC        _convert_to_voltage
+  C:0D06H         PUBLIC        _SPI_Transfer
+  C:0CA5H         PUBLIC        _convert_to_voltage
   D:00D8H         PUBLIC        CCON
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
   D:00F8H         PUBLIC        UEPINT
-  C:0C6EH         PUBLIC        SPI_Init
+  C:0D10H         PUBLIC        SPI_Init
   B:0090H.1       PUBLIC        SPI_CS
   D:00C8H         PUBLIC        T2CON
   D:00C5H         PUBLIC        SPDAT
   -------         PROC          SPI_INIT
-  C:0C6EH         LINE#         21
-  C:0C6EH         LINE#         22
-  C:0C71H         LINE#         23
-  C:0C74H         LINE#         24
+  C:0D10H         LINE#         18
+  C:0D10H         LINE#         19
+  C:0D13H         LINE#         20
+  C:0D16H         LINE#         21
   -------         ENDPROC       SPI_INIT
   -------         PROC          _SPI_TRANSFER
   D:0007H         SYMBOL        value
-  C:0C64H         LINE#         29
-  C:0C64H         LINE#         30
-  C:0C66H         LINE#         31
-  C:0C6BH         LINE#         32
-  C:0C6DH         LINE#         33
+  C:0D06H         LINE#         26
+  C:0D06H         LINE#         27
+  C:0D08H         LINE#         28
+  C:0D0DH         LINE#         29
+  C:0D0FH         LINE#         30
   -------         ENDPROC       _SPI_TRANSFER
   -------         PROC          _LTC_READCHANNEL
   D:0007H         SYMBOL        command
   -------         DO            
-  D:0006H         SYMBOL        msb
+  D:0005H         SYMBOL        msb
   D:0007H         SYMBOL        lsb
-  D:0006H         SYMBOL        result
+  D:0006H         SYMBOL        comanda
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:55:05  PAGE 7
+
+
+  D:0004H         SYMBOL        result
   -------         ENDDO         
-  C:0BE6H         LINE#         49
-  C:0BE6H         LINE#         53
-  C:0BE8H         LINE#         54
-  C:0BEBH         LINE#         55
-  C:0BF2H         LINE#         56
-  C:0BF7H         LINE#         57
-  C:0BF9H         LINE#         59
-  C:0C02H         LINE#         60
-  C:0C02H         LINE#         61
+  C:0AE4H         LINE#         46
+  C:0AE4H         LINE#         49
+  C:0B09H         LINE#         50
+  C:0B09H         LINE#         51
+  C:0B0BH         LINE#         52
+  C:0B0DH         LINE#         53
+  C:0B0DH         LINE#         54
+  C:0B0FH         LINE#         55
+  C:0B11H         LINE#         56
+  C:0B11H         LINE#         57
+  C:0B13H         LINE#         58
+  C:0B15H         LINE#         59
+  C:0B15H         LINE#         60
+  C:0B17H         LINE#         61
+  C:0B19H         LINE#         62
+  C:0B19H         LINE#         63
+  C:0B1BH         LINE#         64
+  C:0B1DH         LINE#         65
+  C:0B1DH         LINE#         66
+  C:0B1FH         LINE#         67
+  C:0B21H         LINE#         68
+  C:0B21H         LINE#         69
+  C:0B23H         LINE#         70
+  C:0B25H         LINE#         71
+  C:0B25H         LINE#         72
+  C:0B27H         LINE#         73
+  C:0B27H         LINE#         74
+  C:0B27H         LINE#         75
+  C:0B29H         LINE#         76
+  C:0B2EH         LINE#         77
+  C:0B35H         LINE#         78
+  C:0B3AH         LINE#         79
+  C:0B3CH         LINE#         81
+  C:0B42H         LINE#         82
+  C:0B45H         LINE#         83
   -------         ENDPROC       _LTC_READCHANNEL
   -------         PROC          _CONVERT_TO_VOLTAGE
   D:0006H         SYMBOL        adc_value
-  C:0C03H         LINE#         63
-  C:0C03H         LINE#         64
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:20:21  PAGE 7
-
-
+  C:0CA5H         LINE#         85
+  C:0CA5H         LINE#         86
   -------         ENDPROC       _CONVERT_TO_VOLTAGE
   -------         ENDMOD        LTC
+
+  -------         MODULE        MCP
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C3H         PUBLIC        SPCON
+  C:0C3BH         PUBLIC        _MCP3302_ConvertToVoltage
+  D:00A8H         PUBLIC        IEN0
+  D:00B8H         PUBLIC        IPL0
+  C:0D17H         PUBLIC        MCP3302_Init
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:55:05  PAGE 8
+
+
+  D:00D8H         PUBLIC        CCON
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0C0FH         PUBLIC        _MCP3302_ReadChannel
+  D:00F8H         PUBLIC        UEPINT
+  B:0090H.1       PUBLIC        SPI_CS
+  D:00C8H         PUBLIC        T2CON
+  -------         PROC          MCP3302_INIT
+  C:0D17H         LINE#         5
+  C:0D17H         LINE#         6
+  C:0D1AH         LINE#         7
+  C:0D1DH         LINE#         8
+  -------         ENDPROC       MCP3302_INIT
+  -------         PROC          _MCP3302_READCHANNEL
+  D:0006H         SYMBOL        channel
+  -------         DO            
+  D:0007H         SYMBOL        start_bit
+  D:000AH         SYMBOL        command
+  D:000BH         SYMBOL        msb
+  D:0005H         SYMBOL        lsb
+  D:0006H         SYMBOL        result
+  -------         ENDDO         
+  C:0C0FH         LINE#         11
+  C:0C11H         LINE#         12
+  C:0C13H         LINE#         20
+  C:0C1EH         LINE#         21
+  C:0C20H         LINE#         22
+  C:0C23H         LINE#         23
+  C:0C2AH         LINE#         24
+  C:0C31H         LINE#         25
+  C:0C33H         LINE#         27
+  C:0C3AH         LINE#         28
+  C:0C3AH         LINE#         29
+  -------         ENDPROC       _MCP3302_READCHANNEL
+  -------         PROC          _MCP3302_CONVERTTOVOLTAGE
+  D:0002H         SYMBOL        adc_value
+  -------         DO            
+  D:000AH         SYMBOL        vref
+  -------         ENDDO         
+  C:0C3BH         LINE#         32
+  C:0C3FH         LINE#         33
+  C:0C4AH         LINE#         34
+  -------         ENDPROC       _MCP3302_CONVERTTOVOLTAGE
+  -------         ENDMOD        MCP
 
   -------         MODULE        ?C?FPMUL
   C:0800H         PUBLIC        ?C?FPMUL
@@ -377,6 +479,9 @@ SYMBOL TABLE OF MODULE:  .\Objects\V1.1 (MAIN)
   C:09B0H         PUBLIC        ?C?FCASTC
   C:09ABH         PUBLIC        ?C?FCASTI
   C:09A6H         PUBLIC        ?C?FCASTL
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/25/2025  20:55:05  PAGE 9
+
+
   -------         ENDMOD        ?C?FCAST
 
   -------         MODULE        ?C?CLDOPTR
@@ -391,8 +496,8 @@ SYMBOL TABLE OF MODULE:  .\Objects\V1.1 (MAIN)
     SEGMENT: ?PR?LCD_BORRAR?LCD
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0206H BYTE (25%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 02AFH BYTE (33%) *
 ******************************************************************************
 
-Program Size: data=23.0 xdata=0 code=1150
+Program Size: data=19.0 xdata=0 code=1319
 LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

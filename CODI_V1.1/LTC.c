@@ -1,6 +1,3 @@
-
-
-
 #include "LTC.h"
 
 // --------------------
@@ -47,11 +44,36 @@ unsigned char SPI_Transfer(unsigned char value) {
 | CH6   | `11011111`  | `0xDF` |
 | CH7   | `11111111`  | `0xFF` |*/
 unsigned int LTC_ReadChannel(unsigned char command) {
-	unsigned char msb, lsb;
+	unsigned char msb, lsb, comanda;
 	unsigned int result;
-
+	switch(command){
+		case 0:
+			comanda = 0xC7;
+			break;
+		case 1:
+			comanda = 0xE7;
+			break;
+		case 2:
+			comanda = 0xCF;
+			break;
+		case 3:
+			comanda = 0xEF;
+			break;
+		case 4:
+			comanda = 0xD7;
+			break;
+		case 5:
+			comanda = 0xF7;
+			break;
+		case 6:
+			comanda = 0xDF;
+			break;
+		case 7:
+			comanda = 0xFF;
+			break;
+	}
 	SPI_CS = 0;                // Activa el xip
-	SPI_Transfer(command);     // Envia la comanda (ex: 0xC7 per canal 0)
+	SPI_Transfer(comanda);     // Envia la comanda (ex: 0xC7 per canal 0)
 	msb = SPI_Transfer(0x00);  // Llegeix primer byte
 	lsb = SPI_Transfer(0x00);  // Llegeix segon byte
 	SPI_CS = 1;                // Desactiva el xip

@@ -1,5 +1,6 @@
 ".\Objects\main.obj",
 ".\Objects\lcd.obj",
-".\Objects\LTC.obj" 
+".\Objects\LTC.obj",
+".\Objects\MCP.obj" 
 TO ".\Objects\V1.1" 
 PRINT(".\Listings\V1.m51") RAMSIZE(256) 

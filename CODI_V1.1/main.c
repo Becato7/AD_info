@@ -9,6 +9,7 @@
 #include <AT89C5131.h> 
 #include "lcd.h"
 #include "LTC.h"
+#include "MCP.h"
 
 //PORT 0
 sbit fc_inf = P0^6;
@@ -38,12 +39,15 @@ void main(void)
 	unsigned char code linea2[16] = {' ','I','I','E','I','A',' ','2','0','2','4',' ',' ',' ',' ',' '};
 	
 	SPI_Init();
+	MCP3302_Init();
 	LCD_BEGIN(linea1, linea2);
 
 	while(1)
 	{ 	
-		    adc_val = LTC_ReadChannel(0xC7);  // canal 0
+		    adc_val = LTC_ReadChannel(0);
         volts = convert_to_voltage(adc_val);
+				adc_val = MCP3302_ReadChannel(0);
+				volts = MCP3302_ConvertToVoltage(adc_val);
   }
 }
 

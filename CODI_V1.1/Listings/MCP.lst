@@ -1,0 +1,59 @@
+C51 COMPILER V9.59.0.0   MCP                                                               05/25/2025 20:53:22 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MCP
+OBJECT MODULE PLACED IN .\Objects\MCP.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE MCP.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\MCP.l
+                    -st) TABS(2) OBJECT(.\Objects\MCP.obj)
+
+line level    source
+
+   1          #include "MCP.h"
+   2          #include "LTC.h"
+   3          
+   4          // Inicialització SPI
+   5          void MCP3302_Init(void) {
+   6   1          SPCON = 0x50;   // Mode master, CPOL = 0, CPHA = 0, Fosc/4
+   7   1          SPCON |= 0x10;  // SPI enable
+   8   1      }
+   9          
+  10          // Llegeix un canal del MCP3302 (0 a 3)
+  11          unsigned int MCP3302_ReadChannel(unsigned char channel) {
+  12   1          unsigned char start_bit = 0x01;
+  13   1          unsigned char command, msb, lsb;
+  14   1          unsigned int result;
+  15   1      
+  16   1          // Construcció de la comanda per MCP3302 (single-ended)
+  17   1          // Primer byte: start bit (0x01)
+  18   1          // Segon byte: SGL/DIF (1), D2, D1, D0, x, x, x, x
+  19   1          // Ex: canal 0 -> 0xA0 (10100000)
+  20   1          command = 0x80 | ((channel & 0x03) << 4);
+  21   1          SPI_CS = 0;                  // Activa el xip
+  22   1          SPI_Transfer(start_bit);     // Start bit
+  23   1          msb = SPI_Transfer(command); // Comanda
+  24   1          lsb = SPI_Transfer(0x00);    // Dummy byte per llegir LSB
+  25   1          SPI_CS = 1;                  // Desactiva el xip
+  26   1      
+  27   1          result = ((msb & 0x1F) << 8) | lsb; // 13 bits útils
+  28   1          return result;
+  29   1      }
+  30          
+  31          // Converteix valor ADC a volts
+  32          float MCP3302_ConvertToVoltage(unsigned int adc_value) {
+  33   1        float vref = 5.0;
+  34   1          return (vref * adc_value) / 8192.0; // 13 bits = 2^13 = 8192
+  35   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     93    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

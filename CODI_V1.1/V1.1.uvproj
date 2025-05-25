@@ -396,6 +396,16 @@
               <FileType>5</FileType>
               <FilePath>.\LTC.h</FilePath>
             </File>
+            <File>
+              <FileName>MCP.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCP.c</FilePath>
+            </File>
+            <File>
+              <FileName>MCP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\MCP.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

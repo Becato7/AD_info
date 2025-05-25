@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   MAIN                                                              05/25/2025 20:20:21 PAGE 1   
+C51 COMPILER V9.59.0.0   MAIN                                                              05/25/2025 20:53:41 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAIN
@@ -19,60 +19,58 @@ line level    source
    9          #include <AT89C5131.h> 
   10          #include "lcd.h"
   11          #include "LTC.h"
-  12          
-  13          //PORT 0
-  14          sbit fc_inf = P0^6;
-  15          sbit fc_sup = P0^5;
-  16          sbit sw_right = P0^4;
-  17          sbit sw_left = P0^3;
-  18          sbit sw_down = P0^2;
-  19          sbit sw_ok = P0^1;
-  20          sbit sw_up = P0^0;
-  21          
-  22          //PORT 2
-  23          sbit ECHO = P2^7;
-  24          sbit TRIG = P2^6;
-  25          sbit RELE4 = P2^5;
-  26          sbit RELE3 = P2^4;
-  27          sbit RELE2 = P2^3;
-  28          sbit RELE1 = P2^2;
-  29          sbit LED_AIGUA = P2^1;
-  30          sbit LED_REG = P2^0;
-  31          
+  12          #include "MCP.h"
+  13          
+  14          //PORT 0
+  15          sbit fc_inf = P0^6;
+  16          sbit fc_sup = P0^5;
+  17          sbit sw_right = P0^4;
+  18          sbit sw_left = P0^3;
+  19          sbit sw_down = P0^2;
+  20          sbit sw_ok = P0^1;
+  21          sbit sw_up = P0^0;
+  22          
+  23          //PORT 2
+  24          sbit ECHO = P2^7;
+  25          sbit TRIG = P2^6;
+  26          sbit RELE4 = P2^5;
+  27          sbit RELE3 = P2^4;
+  28          sbit RELE2 = P2^3;
+  29          sbit RELE1 = P2^2;
+  30          sbit LED_AIGUA = P2^1;
+  31          sbit LED_REG = P2^0;
   32          
   33          
-  34          
-  35          /*--------------------*/
-  36          /* programa principal */
-  37          /*--------------------*/
-  38          
-  39          void main(void)
-  40          {
-  41   1        unsigned int adc_val;
-  42   1        float volts;
-  43   1        unsigned char code linea1[16] = {' ','H','E','L','L','O',' ','B','A','R','C','E','L','O','N','A'};
-  44   1        unsigned char code linea2[16] = {' ','I','I','E','I','A',' ','2','0','2','4',' ',' ',' ',' ',' '};
-  45   1        
-  46   1        SPI_Init();
-  47   1        LCD_BEGIN(linea1, linea2);
-  48   1      
-  49   1        while(1)
-  50   1        {   
-  51   2              adc_val = LTC_ReadChannel(0xC7);  // canal 0
-  52   2              volts = convert_to_voltage(adc_val);
-  53   2        }
-  54   1      }
-C51 COMPILER V9.59.0.0   MAIN                                                              05/25/2025 20:20:21 PAGE 2   
+  34          void main(void)
+  35          {
+  36   1        unsigned int adc_val;
+  37   1        float volts;
+  38   1        unsigned char code linea1[16] = {' ','H','E','L','L','O',' ','B','A','R','C','E','L','O','N','A'};
+  39   1        unsigned char code linea2[16] = {' ','I','I','E','I','A',' ','2','0','2','4',' ',' ',' ',' ',' '};
+  40   1        
+  41   1        SPI_Init();
+  42   1        MCP3302_Init();
+  43   1        LCD_BEGIN(linea1, linea2);
+  44   1      
+  45   1        while(1)
+  46   1        {   
+  47   2              adc_val = LTC_ReadChannel(0);
+  48   2              volts = convert_to_voltage(adc_val);
+  49   2              adc_val = MCP3302_ReadChannel(0);
+  50   2              volts = MCP3302_ConvertToVoltage(adc_val);
+  51   2        }
+  52   1      }
+  53          
 
-  55          
+C51 COMPILER V9.59.0.0   MAIN                                                              05/25/2025 20:53:41 PAGE 2   
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     43    ----
+   CODE SIZE        =     50    ----
    CONSTANT SIZE    =     32    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       6
+   DATA SIZE        =   ----       2
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
