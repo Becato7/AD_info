@@ -1,6 +1,8 @@
 ".\Objects\main.obj",
 ".\Objects\lcd.obj",
 ".\Objects\LTC.obj",
-".\Objects\MCP.obj" 
+".\Objects\MCP.obj",
+".\Objects\BOTONS_RELES.obj",
+".\Objects\STATE_MACHINE.obj" 
 TO ".\Objects\V1.1" 
 PRINT(".\Listings\V1.m51") RAMSIZE(256) 

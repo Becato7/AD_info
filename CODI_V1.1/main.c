@@ -7,47 +7,32 @@
 /*****************************************************************************/
 
 #include <AT89C5131.h> 
+#include "BOTONS_RELES.h"
+#include "STATE_MACHINE.h"
 #include "lcd.h"
 #include "LTC.h"
 #include "MCP.h"
 
-//PORT 0
-sbit fc_inf = P0^6;
-sbit fc_sup = P0^5;
-sbit sw_right = P0^4;
-sbit sw_left = P0^3;
-sbit sw_down = P0^2;
-sbit sw_ok = P0^1;
-sbit sw_up = P0^0;
 
 //PORT 2
 sbit ECHO = P2^7;
 sbit TRIG = P2^6;
-sbit RELE4 = P2^5;
-sbit RELE3 = P2^4;
-sbit RELE2 = P2^3;
-sbit RELE1 = P2^2;
-sbit LED_AIGUA = P2^1;
-sbit LED_REG = P2^0;
-
 
 void main(void)
 {
   unsigned int adc_val;
   float volts;
-	unsigned char code linea1[16] = {' ','H','E','L','L','O',' ','B','A','R','C','E','L','O','N','A'};
-	unsigned char code linea2[16] = {' ','I','I','E','I','A',' ','2','0','2','4',' ',' ',' ',' ',' '};
-	
-	SPI_Init();
-	MCP3302_Init();
-	LCD_BEGIN(linea1, linea2);
 
+	//SPI_Init();
+	//MCP3302_Init();
+	
 	while(1)
 	{ 	
-		    adc_val = LTC_ReadChannel(0);
-        volts = convert_to_voltage(adc_val);
-				adc_val = MCP3302_ReadChannel(0);
-				volts = MCP3302_ConvertToVoltage(adc_val);
+	state_machine();
+		//adc_val = LTC_ReadChannel(0);
+    //volts = convert_to_voltage(adc_val);
+		//adc_val = MCP3302_ReadChannel(0);
+		//volts = MCP3302_ConvertToVoltage(adc_val);
   }
 }
 

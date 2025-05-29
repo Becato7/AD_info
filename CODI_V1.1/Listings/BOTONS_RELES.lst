@@ -1,0 +1,168 @@
+C51 COMPILER V9.59.0.0   BOTONS_RELES                                                      05/29/2025 16:00:39 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE BOTONS_RELES
+OBJECT MODULE PLACED IN .\Objects\BOTONS_RELES.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE BOTONS_RELES.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\BOTONS_RELES.lst) TABS(2) OBJECT(.\Objects\BOTONS_RELES.obj)
+
+line level    source
+
+   1          
+   2          #include "BOTONS_RELES.h"
+   3          
+   4          void delay(unsigned int ms){
+   5   1          unsigned int i,j;
+   6   1        for (i=0;i<ms;i++)
+   7   1          for (j=0;j<240;j++);
+   8   1      }
+   9          
+  10          void control_leds(bit senyal_riego, bit falta_agua){
+  11   1        LED_REG = senyal_riego;
+  12   1        LED_AIGUA = falta_agua;
+  13   1      }
+  14          
+  15          void control_bomba_ventilador(bit ventilador, bit bomba){
+  16   1        RELE4 = bomba;
+  17   1        RELE3 = ventilador;
+  18   1      }
+  19          
+  20          void control_porta(unsigned char control){
+  21   1        if(control == 1){         //Obrir la porta
+  22   2          control_leds(1, 1);
+  23   2          RELE1 = 1;
+  24   2          RELE2 = 0;
+  25   2          delay(5000);
+  26   2          RELE1 = 0;
+  27   2          RELE2 = 0;
+  28   2        }else if (control == 2){  //Tancar la porta
+  29   2          control_leds(1, 1);
+  30   2          RELE1 = 0;
+  31   2          RELE2 = 1;
+  32   2          delay(5000);
+  33   2          RELE1 = 0;
+  34   2          RELE2 = 0;
+  35   2        }else{                    //Porta en OFF
+  36   2          control_leds(0, 0);
+  37   2          RELE1 = 0;
+  38   2          RELE2 = 0;
+  39   2        }
+  40   1      }
+  41          // código de los botones
+  42          
+  43          
+  44          
+  45          /*
+  46          sbit MOTOR   P
+  47          sbit VENT    P
+  48          // DEFINES PRIVADOS
+  49          #define LEFT    1
+  50          #define RIGHT   2
+  51          #define UP      3
+  52          #define DOWN    4
+  53          #define OK      5
+  54          #define NONE    6
+C51 COMPILER V9.59.0.0   BOTONS_RELES                                                      05/29/2025 16:00:39 PAGE 2   
+
+  55          
+  56          #define SCREEN_MAX    5 // puede cambiar, ahora hay 4 pantallas (3+1)
+  57          #define SCREEN_MIN    0 // SIEMPRE SERÁ 0
+  58          
+  59          #define HUM_SCREEN    0
+  60          #define TEMP_SCREEN   1
+  61          #define BLINDS_SCREEN 2
+  62          #define VENT_SCREEN   3
+  63          #define WATER_SCREEN  4
+  64          
+  65          // VARIABLES GLOBALES
+  66          
+  67          unsigned char B_EVENT;    // nos dice el estado de los botones
+  68          unsigned char SCREEN = 0;   // indica en que pantalla estamos
+  69          bit temp_celsius = 1;
+  70          bit hum_percent = 1;
+  71          
+  72          // FUNCIONES
+  73          
+  74          void button_read (void){
+  75          
+  76              if (B_LEFT == 0) {
+  77                  B_EVENT = LEFT;
+  78              } else if (B_RIGHT == 0) {
+  79                  B_EVENT = RIGHT;
+  80              } else if (B_UP == 0) {
+  81                  B_EVENT = UP;
+  82              } else if (B_DOWN == 0) {
+  83                  B_EVENT = DOWN;
+  84              } else if (B_OK == 0) {
+  85                  B_EVENT = OK;
+  86              } else {
+  87                  B_EVENT = NONE;
+  88              }
+  89          }
+  90          
+  91          void handle_buttons (void){
+  92            switch (B_EVENT){
+  93            
+  94                  case LEFT:
+  95                      if (SCREEN > SCREEN_MIN){
+  96                          SCREEN--;
+  97                      } break;
+  98          
+  99                  case RIGHT:
+ 100                      if (SCREEN < SCREEN_MAX){
+ 101                          SCREEN++;
+ 102                      } break;
+ 103          
+ 104                  case OK:
+ 105                      if (SCREEN == BLINDS_SCREEN){
+ 106                          MOTOR = !MOTOR;
+ 107          
+ 108                      } else if (SCREEN == VENT_SCREEN){
+ 109                           if (FC_0 == 1) { // Persiana completamente cerrada -> Abrirla
+ 110                              VENT = 1;     // Activa el actuador para abrir
+ 111                              while (FC_1 == 0){} // Esperamos a que se abra (final de carrera FC_1)    
+ 112                              VENT = 0;     // Parar el actuador cuando se abre completamente
+ 113                          } 
+ 114                          else if (FC_1 == 1) {  // Persiana completamente abierta -> Cerrar
+ 115                              VENT = 1;      // Activa el actuador para cerrar
+ 116                              while (FC_0 == 0){}  // Esperamos a que se cierre (final de carrera FC_0)
+C51 COMPILER V9.59.0.0   BOTONS_RELES                                                      05/29/2025 16:00:39 PAGE 3   
+
+ 117                              VENT = 0;      // Parar el actuador cuando se cierra completamente
+ 118                          }
+ 119                }
+ 120                      break;
+ 121          
+ 122                  case UP:
+ 123                      if (SCREEN == TEMP_SCREEN){
+ 124              temp_celsius = !temp_celsius;
+ 125                } else if (SCREEN == HUM_SCREEN){
+ 126              hum_percent = !hum_percent;
+ 127                      } break;
+ 128          
+ 129                  case DOWN:
+ 130                      if (SCREEN == TEMP_SCREEN){
+ 131              temp_celsius = !temp_celsius;
+ 132                } else if (SCREEN == HUM_SCREEN){
+ 133              hum_percent = !hum_percent;
+ 134                      } break;
+ 135              }
+ 136          
+ 137             B_EVENT = NONE;
+ 138          
+ 139          }
+ 140          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    114    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       4
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

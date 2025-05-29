@@ -16,7 +16,6 @@
 /*----------------------------------*/
 
 void LCD_enviar_comando(char comando, char instr_dato, char cuatro_ocho);
-void LCD_retardo_ms(unsigned int ms);
 void LCD_esperar_BF(void);
 
 
@@ -212,9 +211,11 @@ void LCD_BEGIN(char *linea1, char *linea2)
 	// inicializacion del LCD
 	LCD_inicializar();
 	// primera linea de texto
+	LCD_situar_cursor(1,1);	
 	for (i=0 ; i<16 ; i++)
 	{
 		LCD_escribir_caracter(linea1[i]);		// escritura caracter a caracter
+		LCD_retardo_ms(1);
 	}
 			
  	// segunda linea de texto
@@ -222,6 +223,7 @@ void LCD_BEGIN(char *linea1, char *linea2)
 	for (i=0 ; i<16 ; i++)
 	{
 		LCD_escribir_caracter(linea2[i]); 	// escritura caracter a caracter
+		LCD_retardo_ms(1);
 	}
 }
 

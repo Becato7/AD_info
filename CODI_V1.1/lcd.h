@@ -22,7 +22,7 @@ sbit RW = P3^1;					// ubicacion pin RW
 sbit RS = P3^2;					// ubicacion pin RS	
 sbit BF = P3^7;					// ubicacion BF
 
-
+void LCD_retardo_ms(unsigned int ms);
 /*-------------------------------------------------*/
 /* Nombre: LCD_inicializar                         */
 /* Descripcion: rutina para inicialización del LCD */
