@@ -387,14 +387,9 @@
               <FilePath>.\lcd.c</FilePath>
             </File>
             <File>
-              <FileName>LTC.c</FileName>
+              <FileName>BOTONS_RELES.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\LTC.c</FilePath>
-            </File>
-            <File>
-              <FileName>LTC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\LTC.h</FilePath>
+              <FilePath>.\BOTONS_RELES.c</FilePath>
             </File>
             <File>
               <FileName>MCP.c</FileName>
@@ -402,29 +397,14 @@
               <FilePath>.\MCP.c</FilePath>
             </File>
             <File>
-              <FileName>MCP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\MCP.h</FilePath>
-            </File>
-            <File>
-              <FileName>BOTONS_RELES.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\BOTONS_RELES.c</FilePath>
-            </File>
-            <File>
-              <FileName>BOTONS_RELES.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\BOTONS_RELES.h</FilePath>
-            </File>
-            <File>
               <FileName>STATE_MACHINE.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\STATE_MACHINE.c</FilePath>
             </File>
             <File>
-              <FileName>STATE_MACHINE.h</FileName>
+              <FileName>MCP.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\STATE_MACHINE.h</FilePath>
+              <FilePath>.\MCP.h</FilePath>
             </File>
           </Files>
         </Group>

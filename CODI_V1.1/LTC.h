@@ -1,5 +1,5 @@
-#include <AT89C5131.h>
-
+//#include <AT89C5131.h>
+#include <reg51.h>
 //PORT 1
 sbit SPI_CS   = P1^1;
 

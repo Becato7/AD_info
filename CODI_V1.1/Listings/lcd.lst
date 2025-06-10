@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   LCD                                                               06/06/2025 16:36:18 PAGE 1   
+C51 COMPILER V9.59.0.0   LCD                                                               06/10/2025 19:12:07 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE LCD
@@ -17,7 +17,7 @@ line level    source
    7          /*****************************************************************************/
    8          // Version modificada para poder escribir sin modificar los bits de menor peso del puerto del LCD
    9          
-  10          
+  10          #include <AT89C5131.h> 
   11          #include "lcd.h"
   12          
   13          
@@ -26,226 +26,224 @@ line level    source
   16          /*----------------------------------*/
   17          
   18          void LCD_enviar_comando(char comando, char instr_dato, char cuatro_ocho);
-  19          void LCD_esperar_BF(void);
-  20          
+  19          void LCD_retardo_ms(unsigned int ms);
+  20          void LCD_esperar_BF(void);
   21          
-  22          /*-------------------------------------------------*/
-  23          /* Nombre: LCD_inicializar                         */
-  24          /* Descripcion: rutina para inicializaci�n del LCD */
-  25          /* Parametros:                                     */
-  26          /* Resultado:                                      */
-  27          /*-------------------------------------------------*/
-  28          
-  29          void LCD_inicializar(void)
-  30          {
-  31   1      
-  32   1        // inicialmente se trabaja como si la interfaz fuera de 8 bits 
-  33   1        // (lo sea realmente o no) y con tiempo fijo entre instrucciones 
-  34   1        LCD_retardo_ms(15);                 // retardo inicial de 15 ms
-  35   1        LCD_enviar_comando(0x30,0,8);       // Function Set
-  36   1        LCD_retardo_ms(5);                  // retardo de 5 ms (>4.1 ms)
-  37   1        LCD_enviar_comando(0x30,0,8);       // Function Set
-  38   1        LCD_retardo_ms(1);                  // retardo de 1 ms (>100 us)
-  39   1        LCD_enviar_comando(0x30,0,8);       // Function Set
-  40   1      
-  41   1        // a partir de ahora hay espera del BF
-  42   1        // si la interfaz es de 4 bits se le indica al LCD
-  43   1        if (TAM_INTERFAZ==4)
-  44   1        {
-  45   2          LCD_enviar_comando(0x20,0,8);     // Function Set -> interfaz 4 bits
-  46   2          LCD_esperar_BF();
-  47   2        }
-  48   1      
-  49   1        // a partir de aqui el funcionamiento a bajo nivel
-  50   1        // es diferente en funci�n del tama�o del interfaz
-  51   1        // (lo gestiona LCD_enviar_comando), pero los
-  52   1        // comandos enviados son los mismos
-  53   1        LCD_enviar_comando(0x28,0,TAM_INTERFAZ);  // Function set: N=1, F=0 -> 2 lineas, caracteres de 7*5 pixels
-  54   1        LCD_esperar_BF();
-C51 COMPILER V9.59.0.0   LCD                                                               06/06/2025 16:36:18 PAGE 2   
+  22          
+  23          /*-------------------------------------------------*/
+  24          /* Nombre: LCD_inicializar                         */
+  25          /* Descripcion: rutina para inicializaci�n del LCD */
+  26          /* Parametros:                                     */
+  27          /* Resultado:                                      */
+  28          /*-------------------------------------------------*/
+  29          
+  30          void LCD_inicializar(void)
+  31          {
+  32   1      
+  33   1        // inicialmente se trabaja como si la interfaz fuera de 8 bits 
+  34   1        // (lo sea realmente o no) y con tiempo fijo entre instrucciones 
+  35   1        LCD_retardo_ms(15);                 // retardo inicial de 15 ms
+  36   1        LCD_enviar_comando(0x30,0,8);       // Function Set
+  37   1        LCD_retardo_ms(5);                  // retardo de 5 ms (>4.1 ms)
+  38   1        LCD_enviar_comando(0x30,0,8);       // Function Set
+  39   1        LCD_retardo_ms(1);                  // retardo de 1 ms (>100 us)
+  40   1        LCD_enviar_comando(0x30,0,8);       // Function Set
+  41   1      
+  42   1        // a partir de ahora hay espera del BF
+  43   1        // si la interfaz es de 4 bits se le indica al LCD
+  44   1        if (TAM_INTERFAZ==4)
+  45   1        {
+  46   2          LCD_enviar_comando(0x20,0,8);     // Function Set -> interfaz 4 bits
+  47   2          LCD_esperar_BF();
+  48   2        }
+  49   1      
+  50   1        // a partir de aqui el funcionamiento a bajo nivel
+  51   1        // es diferente en funci�n del tama�o del interfaz
+  52   1        // (lo gestiona LCD_enviar_comando), pero los
+  53   1        // comandos enviados son los mismos
+  54   1        LCD_enviar_comando(0x28,0,TAM_INTERFAZ);  // Function set: N=1, F=0 -> 2 lineas, caracteres de 7*5 pixels
+C51 COMPILER V9.59.0.0   LCD                                                               06/10/2025 19:12:07 PAGE 2   
 
-  55   1        LCD_enviar_comando(0x08,0,TAM_INTERFAZ);  // Display Off
-  56   1        LCD_esperar_BF();
-  57   1        LCD_enviar_comando(0x01,0,TAM_INTERFAZ);  // Clear Display
-  58   1        LCD_esperar_BF(); 
-  59   1        LCD_enviar_comando(0x06,0,TAM_INTERFAZ);  // Entry Mode Set: I/D=1 -> cursor a derecha, S=0 -> contenido "
+  55   1        LCD_esperar_BF();
+  56   1        LCD_enviar_comando(0x08,0,TAM_INTERFAZ);  // Display Off
+  57   1        LCD_esperar_BF();
+  58   1        LCD_enviar_comando(0x01,0,TAM_INTERFAZ);  // Clear Display
+  59   1        LCD_esperar_BF(); 
+  60   1        LCD_enviar_comando(0x06,0,TAM_INTERFAZ);  // Entry Mode Set: I/D=1 -> cursor a derecha, S=0 -> contenido "
              -quieto"
-  60   1        LCD_esperar_BF(); 
-  61   1        LCD_enviar_comando(0x02,0,TAM_INTERFAZ);  // Return Home
-  62   1        LCD_esperar_BF(); 
-  63   1        LCD_enviar_comando(0x0C,0,TAM_INTERFAZ);  // Display Control: D=1 -> LCD on, C=0 -> cursor invisible, B=0 
+  61   1        LCD_esperar_BF(); 
+  62   1        LCD_enviar_comando(0x02,0,TAM_INTERFAZ);  // Return Home
+  63   1        LCD_esperar_BF(); 
+  64   1        LCD_enviar_comando(0x0C,0,TAM_INTERFAZ);  // Display Control: D=1 -> LCD on, C=0 -> cursor invisible, B=0 
              --> caracter no parpadea
-  64   1      }
-  65          
+  65   1      }
   66          
-  67          /*-------------------------------------------------*/
-  68          /* Nombre: LCD_borrar                              */
-  69          /* Descripcion: borra el contenido del LCD         */
-  70          /* Parametros:                                     */
-  71          /* Resultado:                                      */
-  72          /*-------------------------------------------------*/
-  73          
-  74          void LCD_borrar(void)
-  75          {
-  76   1        LCD_enviar_comando(0x01,0,TAM_INTERFAZ);  // Clear Display
-  77   1        LCD_esperar_BF();
-  78   1      }
-  79          
+  67          
+  68          /*-------------------------------------------------*/
+  69          /* Nombre: LCD_borrar                              */
+  70          /* Descripcion: borra el contenido del LCD         */
+  71          /* Parametros:                                     */
+  72          /* Resultado:                                      */
+  73          /*-------------------------------------------------*/
+  74          
+  75          void LCD_borrar(void)
+  76          {
+  77   1        LCD_enviar_comando(0x01,0,TAM_INTERFAZ);  // Clear Display
+  78   1        LCD_esperar_BF();
+  79   1      }
   80          
-  81          /*-------------------------------------------------*/
-  82          /* Nombre: LCD_situar_cursor                       */
-  83          /* Descripcion: sit�a el cursor del LCD en una     */
-  84          /*              determinada posici�n               */
-  85          /* Parametros:                                     */
-  86          /*   fila - fila seleccionada                      */
-  87          /*   columna - columna                             */
-  88          /* Resultado:                                      */
-  89          /*-------------------------------------------------*/
-  90          
-  91          void LCD_situar_cursor(unsigned char fila, unsigned char columna)
-  92          {
-  93   1        unsigned char address;
-  94   1        address = 40*(fila-1)+columna-1;
-  95   1        LCD_enviar_comando(address|0x80,0,TAM_INTERFAZ);  // Set DDRAM Address
-  96   1        LCD_esperar_BF();
-  97   1      }
-  98          
+  81          
+  82          /*-------------------------------------------------*/
+  83          /* Nombre: LCD_situar_cursor                       */
+  84          /* Descripcion: sit�a el cursor del LCD en una     */
+  85          /*              determinada posici�n               */
+  86          /* Parametros:                                     */
+  87          /*   fila - fila seleccionada                      */
+  88          /*   columna - columna                             */
+  89          /* Resultado:                                      */
+  90          /*-------------------------------------------------*/
+  91          
+  92          void LCD_situar_cursor(unsigned char fila, unsigned char columna)
+  93          {
+  94   1        unsigned char address;
+  95   1        address = 40*(fila-1)+columna-1;
+  96   1        LCD_enviar_comando(address|0x80,0,TAM_INTERFAZ);  // Set DDRAM Address
+  97   1        LCD_esperar_BF();
+  98   1      }
   99          
- 100          /*-------------------------------------------------*/
- 101          /* Nombre: LCD_escribir_caracter                   */
- 102          /* Descripcion: escribe un caracter en el LCD, en  */
- 103          /*              la posici�n actual del cursor      */
- 104          /* Parametros:                                     */
- 105          /*   caracter - caracter visualizado               */
- 106          /* Resultado:                                      */
- 107          /*-------------------------------------------------*/
- 108          
- 109          void LCD_escribir_caracter(char caracter)
- 110          {
- 111   1        LCD_enviar_comando(caracter,1,TAM_INTERFAZ);  // Write Data
- 112   1        LCD_esperar_BF();
- 113   1      }
- 114          
-C51 COMPILER V9.59.0.0   LCD                                                               06/06/2025 16:36:18 PAGE 3   
+ 100          
+ 101          /*-------------------------------------------------*/
+ 102          /* Nombre: LCD_escribir_caracter                   */
+ 103          /* Descripcion: escribe un caracter en el LCD, en  */
+ 104          /*              la posici�n actual del cursor      */
+ 105          /* Parametros:                                     */
+ 106          /*   caracter - caracter visualizado               */
+ 107          /* Resultado:                                      */
+ 108          /*-------------------------------------------------*/
+ 109          
+ 110          void LCD_escribir_caracter(char caracter)
+ 111          {
+ 112   1        LCD_enviar_comando(caracter,1,TAM_INTERFAZ);  // Write Data
+ 113   1        LCD_esperar_BF();
+ 114   1      }
+C51 COMPILER V9.59.0.0   LCD                                                               06/10/2025 19:12:07 PAGE 3   
 
  115          
- 116          /*-------------------------------------------------*/
- 117          /* Nombre: LCD_retardo                             */
- 118          /* Descripcion: rutina de retardo                  */
- 119          /* Parametros:                                     */
- 120          /*   ms - milisegundos de retardo                  */
- 121          /* Resultado:                                      */
- 122          /*-------------------------------------------------*/
- 123          
- 124          void LCD_retardo_ms(unsigned int ms)    
- 125          {
- 126   1        unsigned int i,j;
- 127   1      
- 128   1        for (i=0;i<ms;i++)
- 129   1          for (j=0;j<240;j++);
- 130   1      }
- 131          
+ 116          
+ 117          /*-------------------------------------------------*/
+ 118          /* Nombre: LCD_retardo                             */
+ 119          /* Descripcion: rutina de retardo                  */
+ 120          /* Parametros:                                     */
+ 121          /*   ms - milisegundos de retardo                  */
+ 122          /* Resultado:                                      */
+ 123          /*-------------------------------------------------*/
+ 124          
+ 125          void LCD_retardo_ms(unsigned int ms)    
+ 126          {
+ 127   1        unsigned int i,j;
+ 128   1      
+ 129   1        for (i=0;i<ms;i++)
+ 130   1          for (j=0;j<240;j++);
+ 131   1      }
  132          
- 133          /*-------------------------------------------------*/
- 134          /* Nombre: LCD_enviar_comando                      */
- 135          /* Descripcion: envia un comando (instruccion o    */
- 136          /*              dato) al controlador del LCD       */
- 137          /* Parametros:                                     */
- 138          /*   comando - comando enviado (DB7-DB0)           */
- 139          /*   instr_dato - 0 <-> instruccion, 1 <-> dato    */
- 140          /*   cuatro_ocho - 0 <-> 4 bits, 1 <-> 8 bits      */
- 141          /* Resultado:                                      */
- 142          /*-------------------------------------------------*/
- 143          
- 144          void LCD_enviar_comando(char comando, char instr_dato, char cuatro_ocho)
- 145          {
- 146   1        // RS = 0/1 en funcion de instr_dato
- 147   1        if (instr_dato==0)
- 148   1          RS = 0;   // instruccion
- 149   1        else
- 150   1          RS = 1;   // dato
- 151   1      
- 152   1        // RW = 0 -> escritura
- 153   1        RW = 0;
- 154   1      
- 155   1        // si interfaz de 4 bits
- 156   1        if (cuatro_ocho==4)
- 157   1        {
- 158   2          // 4 bits altos
- 159   2          LCD = (LCD&0x0F)|(comando & 0xF0);
- 160   2          
- 161   2          // pulso en EN
- 162   2          EN = 1;
- 163   2          EN = 0;
- 164   2          
- 165   2          // 4 bits bajos
- 166   2          LCD = (LCD&0x0F)|(comando<<4);
- 167   2      
- 168   2          // pulso en EN
- 169   2          EN = 1;
- 170   2          EN = 0;
- 171   2        }
- 172   1      
- 173   1        // interfaz de 8 bits
- 174   1        else
- 175   1        {
- 176   2          // byte completo
-C51 COMPILER V9.59.0.0   LCD                                                               06/06/2025 16:36:18 PAGE 4   
+ 133          
+ 134          /*-------------------------------------------------*/
+ 135          /* Nombre: LCD_enviar_comando                      */
+ 136          /* Descripcion: envia un comando (instruccion o    */
+ 137          /*              dato) al controlador del LCD       */
+ 138          /* Parametros:                                     */
+ 139          /*   comando - comando enviado (DB7-DB0)           */
+ 140          /*   instr_dato - 0 <-> instruccion, 1 <-> dato    */
+ 141          /*   cuatro_ocho - 0 <-> 4 bits, 1 <-> 8 bits      */
+ 142          /* Resultado:                                      */
+ 143          /*-------------------------------------------------*/
+ 144          
+ 145          void LCD_enviar_comando(char comando, char instr_dato, char cuatro_ocho)
+ 146          {
+ 147   1        // RS = 0/1 en funcion de instr_dato
+ 148   1        if (instr_dato==0)
+ 149   1          RS = 0;   // instruccion
+ 150   1        else
+ 151   1          RS = 1;   // dato
+ 152   1      
+ 153   1        // RW = 0 -> escritura
+ 154   1        RW = 0;
+ 155   1      
+ 156   1        // si interfaz de 4 bits
+ 157   1        if (cuatro_ocho==4)
+ 158   1        {
+ 159   2          // 4 bits altos
+ 160   2          LCD = (LCD&0x0F)|(comando & 0xF0);
+ 161   2          
+ 162   2          // pulso en EN
+ 163   2          EN = 1;
+ 164   2          EN = 0;
+ 165   2          
+ 166   2          // 4 bits bajos
+ 167   2          LCD = (LCD&0x0F)|(comando<<4);
+ 168   2      
+ 169   2          // pulso en EN
+ 170   2          EN = 1;
+ 171   2          EN = 0;
+ 172   2        }
+ 173   1      
+ 174   1        // interfaz de 8 bits
+ 175   1        else
+ 176   1        {
+C51 COMPILER V9.59.0.0   LCD                                                               06/10/2025 19:12:07 PAGE 4   
 
- 177   2          LCD = comando;
- 178   2          
- 179   2          // pulso en EN
- 180   2          EN = 1;
- 181   2          EN = 0;
- 182   2        }
- 183   1      }
- 184          
+ 177   2          // byte completo
+ 178   2          LCD = comando;
+ 179   2          
+ 180   2          // pulso en EN
+ 181   2          EN = 1;
+ 182   2          EN = 0;
+ 183   2        }
+ 184   1      }
  185          
- 186          /*-------------------------------------------------*/
- 187          /* Nombre: LCD_esperar_BF                          */
- 188          /* Descripcion: espera a que el BF sea 0 (fin op.) */
- 189          /* Parametros:                                     */
- 190          /* Resultado:                                      */
- 191          /*-------------------------------------------------*/
- 192          
- 193          void LCD_esperar_BF(void)
- 194          {
- 195   1        BF = 1;
- 196   1        RS = 0;         // instruccion
- 197   1        RW = 1;         // lectura
- 198   1        EN = 1;         // EN=1 -> el LCD responde con BF
- 199   1        while (BF==1);  // espera a que BF=0 
- 200   1        EN = 0;         // EN=0
- 201   1        RW = 0;         // RW=0
- 202   1      }
- 203          
+ 186          
+ 187          /*-------------------------------------------------*/
+ 188          /* Nombre: LCD_esperar_BF                          */
+ 189          /* Descripcion: espera a que el BF sea 0 (fin op.) */
+ 190          /* Parametros:                                     */
+ 191          /* Resultado:                                      */
+ 192          /*-------------------------------------------------*/
+ 193          
+ 194          void LCD_esperar_BF(void)
+ 195          {
+ 196   1        BF = 1;
+ 197   1        RS = 0;         // instruccion
+ 198   1        RW = 1;         // lectura
+ 199   1        EN = 1;         // EN=1 -> el LCD responde con BF
+ 200   1        while (BF==1);  // espera a que BF=0 
+ 201   1        EN = 0;         // EN=0
+ 202   1        RW = 0;         // RW=0
+ 203   1      }
  204          
  205          void LCD_BEGIN(char *linea1, char *linea2)
  206          {
  207   1          unsigned int i; // indice
- 208   1      LCD_borrar();
- 209   1        
- 210   1        // primera linea de texto
- 211   1        LCD_situar_cursor(1,1); 
- 212   1        for (i=0 ; i<16 ; i++)
- 213   1        {
- 214   2          LCD_escribir_caracter(linea1[i]);   // escritura caracter a caracter
- 215   2          LCD_retardo_ms(5);
- 216   2        }
- 217   1            
- 218   1        // segunda linea de texto
- 219   1        LCD_situar_cursor(2,1);               // ubica el cursor al inicio de segunda linea
- 220   1        for (i=0 ; i<16 ; i++)
- 221   1        {
- 222   2          LCD_escribir_caracter(linea2[i]);   // escritura caracter a caracter
- 223   2          LCD_retardo_ms(5);
- 224   2        }
- 225   1      }
- 226          
+ 208   1        
+ 209   1        // primera linea de texto
+ 210   1        LCD_situar_cursor(1,1); 
+ 211   1        for (i=0 ; i<16 ; i++)
+ 212   1        {
+ 213   2          LCD_escribir_caracter(linea1[i]);   // escritura caracter a caracter
+ 214   2          LCD_retardo_ms(5);
+ 215   2        }
+ 216   1            
+ 217   1        // segunda linea de texto
+ 218   1        LCD_situar_cursor(2,1);               // ubica el cursor al inicio de segunda linea
+ 219   1        for (i=0 ; i<16 ; i++)
+ 220   1        {
+ 221   2          LCD_escribir_caracter(linea2[i]);   // escritura caracter a caracter
+ 222   2          LCD_retardo_ms(5);
+ 223   2        }
+ 224   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    379    ----
+   CODE SIZE        =    376    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

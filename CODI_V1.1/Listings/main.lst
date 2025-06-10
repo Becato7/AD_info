@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   MAIN                                                              06/10/2025 14:54:10 PAGE 1   
+C51 COMPILER V9.59.0.0   MAIN                                                              06/10/2025 19:37:31 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAIN
@@ -8,64 +8,46 @@ COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE 
 
 line level    source
 
-   1          
-   2          /*****************************************************************************/
-   3          /* Fichero     - main_lcd.c                                                  */
-   4          /* Descripcion - Codi principal de la AD                                     */
-   5          /* Autor       - Bernat Carnota                                              */
-   6          /* Fecha       - 29/04/2025                                                  */
-   7          /*****************************************************************************/
+   1          /*****************************************************************************/
+   2          /* Fichero     - main.c                                                      */
+   3          /* Descripcion - programaci?n del LCD: programa de ejemplo                   */
+   4          /* Autor       - STS                                                         */
+   5          /* Fecha       - 25/05/2025                                                  */
+   6          /*****************************************************************************/
+   7          
    8          
    9          #include <AT89C5131.h> 
-  10          #include "BOTONS_RELES.h"
+  10          #include "lcd.h"
   11          #include "STATE_MACHINE.h"
-  12          #include "lcd.h"
-  13          #include "LTC.h"
-  14          #include "MCP.h"
-  15          
-  16          
-  17          //PORT 2
-  18          sbit ECHO = P2^7;
-  19          sbit TRIG = P2^6;
-  20          
-  21          void main(void)
-  22          {
-  23   1        unsigned char code linea1[16] = {' ','H','E','L','L','O',' ','B','A','R','C','E','L','O','N','A'};
-  24   1        unsigned char code linea2[16] = {' ','I','I','E','I','A',' ','2','0','2','4',' ',' ',' ',' ',' '};
-  25   1      
-  26   1      
-  27   1        LCD_inicializar();
-  28   1        LCD_borrar();
-  29   1        P1 = 0xFF;
-  30   1        P0 = 0xFF;
-  31   1        P2 = 0x00;
-  32   1      
-  33   1        while(1)
-  34   1        {         
-  35   2          LCD_situar_cursor(1,1); 
-  36   2          LCD_escribir_caracter('1');
-  37   2          delay(5);
-  38   2          LCD_situar_cursor(1,10);  
-  39   2          LCD_escribir_caracter('2');
-  40   2          delay(5);
-  41   2        }
-  42   1      }
-*** WARNING C280 IN LINE 23 OF main.c: 'linea1': unreferenced local variable
-*** WARNING C280 IN LINE 24 OF main.c: 'linea2': unreferenced local variable
-  43          
+  12          #include "MCP.h"
+  13          
+  14          
+  15          void main(void)
+  16          {
+  17   1        unsigned char lectura = 0;
+  18   1        LCD_inicializar();
+  19   1        LCD_borrar();
+  20   1        SPI_Init();
+  21   1        P0 = 0xFF;
+  22   1        P2 = 0x00;
+  23   1      
+  24   1        while(1){
+  25   2          //lectura = MCP3302_ReadChannel(0);
+  26   2          state_machine(lectura);
+  27   2        }
+  28   1      }
+  29          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     55    ----
-   CONSTANT SIZE    =     32    ----
+   CODE SIZE        =     25    ----
+   CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =   ----       1
    IDATA SIZE       =   ----    ----
-C51 COMPILER V9.59.0.0   MAIN                                                              06/10/2025 14:54:10 PAGE 2   
-
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

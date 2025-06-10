@@ -7,7 +7,7 @@
 /*****************************************************************************/
 // Version modificada para poder escribir sin modificar los bits de menor peso del puerto del LCD
 
-
+#include <AT89C5131.h> 
 #include "lcd.h"
 
 
@@ -16,6 +16,7 @@
 /*----------------------------------*/
 
 void LCD_enviar_comando(char comando, char instr_dato, char cuatro_ocho);
+void LCD_retardo_ms(unsigned int ms);
 void LCD_esperar_BF(void);
 
 
@@ -201,11 +202,9 @@ void LCD_esperar_BF(void)
 	RW = 0;					// RW=0
 }
 
-
 void LCD_BEGIN(char *linea1, char *linea2)
 {
 		unsigned int i;	// indice
-LCD_borrar();
 	
 	// primera linea de texto
 	LCD_situar_cursor(1,1);	
@@ -223,4 +222,3 @@ LCD_borrar();
 		LCD_retardo_ms(5);
 	}
 }
-

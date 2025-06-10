@@ -11,4 +11,4 @@ void control_temp(void);
 void control_hum(void);
 void control_vent(void);
 void control_motor(void);
-void state_machine(void);
+void state_machine(unsigned char lectura);

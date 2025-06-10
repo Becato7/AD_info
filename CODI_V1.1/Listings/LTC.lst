@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   LTC                                                               05/25/2025 20:55:05 PAGE 1   
+C51 COMPILER V9.59.0.0   LTC                                                               06/10/2025 17:20:05 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE LTC
@@ -27,7 +27,9 @@ line level    source
   17          */
   18          void SPI_Init(void) {
   19   1        SPCON = 0x50;     // Master mode, CPOL=0, CPHA=0, Fosc/4
+*** ERROR C202 IN LINE 19 OF LTC.c: 'SPCON': undefined identifier
   20   1        SPCON |= 0x10;    // SPI Enable
+*** ERROR C202 IN LINE 20 OF LTC.c: 'SPCON': undefined identifier
   21   1      }
   22          
   23          // --------------------
@@ -35,8 +37,11 @@ line level    source
   25          // --------------------
   26          unsigned char SPI_Transfer(unsigned char value) {
   27   1        SPDAT = value;
+*** ERROR C202 IN LINE 27 OF LTC.c: 'SPDAT': undefined identifier
   28   1        while (!(SPSTA & 0x80));  // Espera a que SPIF = 1
+*** ERROR C202 IN LINE 28 OF LTC.c: 'SPSTA': undefined identifier
   29   1        return SPDAT;
+*** ERROR C202 IN LINE 29 OF LTC.c: 'SPDAT': undefined identifier
   30   1      }
   31          
   32          // --------------------
@@ -57,13 +62,13 @@ line level    source
   47   1        unsigned char msb, lsb, comanda;
   48   1        unsigned int result;
   49   1        switch(command){
+C51 COMPILER V9.59.0.0   LTC                                                               06/10/2025 17:20:05 PAGE 2   
+
   50   2          case 0:
   51   2            comanda = 0xC7;
   52   2            break;
   53   2          case 1:
   54   2            comanda = 0xE7;
-C51 COMPILER V9.59.0.0   LTC                                                               05/25/2025 20:55:05 PAGE 2   
-
   55   2            break;
   56   2          case 2:
   57   2            comanda = 0xCF;
@@ -98,16 +103,4 @@ line level    source
   86   1          return (5.0 * adc_value) / 4096.0;
   87   1      }
 
-
-MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    143    ----
-   CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
-   PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
-   IDATA SIZE       =   ----    ----
-   BIT SIZE         =   ----    ----
-END OF MODULE INFORMATION.
-
-
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  5 ERROR(S)

@@ -1,10 +1,32 @@
 #include "MCP.h"
-#include "LTC.h"
 
-// Inicialització SPI
-void MCP3302_Init(void) {
-    SPCON = 0x50;   // Mode master, CPOL = 0, CPHA = 0, Fosc/4
-    SPCON |= 0x10;  // SPI enable
+// --------------------
+// Inicialització SPI hardware
+// --------------------
+/*
+| Bit | Nom          | Valor | Significat                                  |
+| --- | ------------ | ----- | ------------------------------------------- |
+| 7   | WCOL         | 0     | No col·lisió d’escriptura                   |
+| 6   | SPEN         | 1     | SPI **habilitat** (es fa també a sota)      |
+| 5   | MSTR         | 1     | SPI en **mode master**                      |
+| 4   | CPOL         | 1     | Clock Polarity: **idle = alt**              |
+| 3   | CPHA         | 0     | Clock Phase: mostra dades a primer flanc    |
+| 2   | SPR1         | 0     | Velocitat: (SPR1\:SPR0) = `00` ? **Fosc/4** |
+| 1   | SPR0         | 0     | idem                                        |
+| 0   | bit reservat | 0     | No s’utilitza                               |
+*/
+void SPI_Init(void) {
+	SPCON = 0x50;     // Master mode, CPOL=0, CPHA=0, Fosc/4
+	SPCON |= 0x10;    // SPI Enable
+}
+
+// --------------------
+// Envia i rep 1 byte SPI
+// --------------------
+unsigned char SPI_Transfer(unsigned char value) {
+	SPDAT = value;
+	while (!(SPSTA & 0x80));  // Espera a que SPIF = 1
+	return SPDAT;
 }
 
 // Llegeix un canal del MCP3302 (0 a 3)

@@ -7,8 +7,8 @@ unsigned char desenes = 0;
 unsigned char unitats = 0;
 unsigned char decimal = 0;
 //MENU
-//unsigned char code linea1[16] = {'M','E','N','U',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
-//unsigned char code linea2[16] = {'<','-',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','>'};
+unsigned char code linea1[16] = {'M','E','N','U',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
+unsigned char code linea2[16] = {'<','-',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','>'};
 
 //TEMPERATURE SCREEN
 unsigned int temperatura_actual = 245;
@@ -39,17 +39,17 @@ void dividir_valor(unsigned int valor){
 }
 
 void control_temp(void){
-	if(B_UP == 0){
+	if(B_RIGHT == 0){
 		temperatura_max++;
-	}else if(B_DOWN == 0){
+	}else if(B_LEFT == 0){
 		temperatura_max--;
 	}
 }
 
 void control_hum(void){
-	if(B_UP == 0){
+	if(B_RIGHT == 0){
 		humitat_min++;
-	}else if(B_DOWN == 0){
+	}else if(B_LEFT == 0){
 		humitat_min--;
 	}
 }
@@ -72,14 +72,14 @@ void control_motor(void){
 	}
 }
 
-void state_machine(void){
-		if(B_LEFT == 0){
+void state_machine(unsigned char lectura){
+		if(B_DOWN == 0){
 			PANTALLA++;
 			if(PANTALLA == 5){
 				PANTALLA = main_screen;
 			}
 			delay(200);
-		}else if(B_RIGHT == 0){
+		}else if(B_UP == 0){
 			PANTALLA--;
 			if(PANTALLA == 255){
 				PANTALLA = ventilator_screen;
@@ -88,11 +88,11 @@ void state_machine(void){
 		}
 		
 		if(PANTALLA == main_screen){
-			//LCD_BEGIN(linea1, linea2);
+			LCD_BEGIN(linea1, linea2);
 		}
 		else if(PANTALLA == temp_screen){
 			control_temp();
-			dividir_valor(temperatura_actual);
+			dividir_valor(lectura);
 			linea4[0] = desenes+0x30;
 			linea4[1] = unitats+0x30;
 			linea4[3] = decimal+0x30;

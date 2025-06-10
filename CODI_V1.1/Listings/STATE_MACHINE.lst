@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/06/2025 16:39:48 PAGE 1   
+C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/10/2025 19:31:33 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE STATE_MACHINE
@@ -17,8 +17,8 @@ line level    source
    7          unsigned char unitats = 0;
    8          unsigned char decimal = 0;
    9          //MENU
-  10          //unsigned char code linea1[16] = {'M','E','N','U',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
-  11          //unsigned char code linea2[16] = {'<','-',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','>'};
+  10          unsigned char code linea1[16] = {'M','E','N','U',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
+  11          unsigned char code linea2[16] = {'<','-',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','>'};
   12          
   13          //TEMPERATURE SCREEN
   14          unsigned int temperatura_actual = 245;
@@ -49,20 +49,20 @@ line level    source
   39   1      }
   40          
   41          void control_temp(void){
-  42   1        if(B_UP == 0){
+  42   1        if(B_RIGHT == 0){
   43   2          temperatura_max++;
-  44   2        }else if(B_DOWN == 0){
+  44   2        }else if(B_LEFT == 0){
   45   2          temperatura_max--;
   46   2        }
   47   1      }
   48          
   49          void control_hum(void){
-  50   1        if(B_UP == 0){
+  50   1        if(B_RIGHT == 0){
   51   2          humitat_min++;
-  52   2        }else if(B_DOWN == 0){
+  52   2        }else if(B_LEFT == 0){
   53   2          humitat_min--;
   54   2        }
-C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/06/2025 16:39:48 PAGE 2   
+C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/10/2025 19:31:33 PAGE 2   
 
   55   1      }
   56          
@@ -84,14 +84,14 @@ line level    source
   72   2        }
   73   1      }
   74          
-  75          void state_machine(void){
-  76   1          if(B_LEFT == 0){
+  75          void state_machine(unsigned char lectura){
+  76   1          if(B_DOWN == 0){
   77   2            PANTALLA++;
   78   2            if(PANTALLA == 5){
   79   3              PANTALLA = main_screen;
   80   3            }
   81   2            delay(200);
-  82   2          }else if(B_RIGHT == 0){
+  82   2          }else if(B_UP == 0){
   83   2            PANTALLA--;
   84   2            if(PANTALLA == 255){
   85   3              PANTALLA = ventilator_screen;
@@ -100,11 +100,11 @@ line level    source
   88   2          }
   89   1          
   90   1          if(PANTALLA == main_screen){
-  91   2            //LCD_BEGIN(linea1, linea2);
+  91   2            LCD_BEGIN(linea1, linea2);
   92   2          }
   93   1          else if(PANTALLA == temp_screen){
   94   2            control_temp();
-  95   2            dividir_valor(temperatura_actual);
+  95   2            dividir_valor(lectura);
   96   2            linea4[0] = desenes+0x30;
   97   2            linea4[1] = unitats+0x30;
   98   2            linea4[3] = decimal+0x30;
@@ -126,7 +126,7 @@ line level    source
  114   2            linea6[11] = decimal+0x30;
  115   2            LCD_BEGIN(linea5, linea6);
  116   2          }
-C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/06/2025 16:39:48 PAGE 3   
+C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/10/2025 19:31:33 PAGE 3   
 
  117   1          else if(PANTALLA == motor_screen){
  118   2            control_motor();
@@ -184,13 +184,13 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    573    ----
-   CONSTANT SIZE    =     64    ----
+   CODE SIZE        =    591    ----
+   CONSTANT SIZE    =     96    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     78    ----
+   DATA SIZE        =     78       1
    IDATA SIZE       =   ----    ----
-C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/06/2025 16:39:48 PAGE 4   
+C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/10/2025 19:31:33 PAGE 4   
 
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
