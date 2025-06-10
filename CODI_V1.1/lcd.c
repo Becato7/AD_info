@@ -205,17 +205,14 @@ void LCD_esperar_BF(void)
 void LCD_BEGIN(char *linea1, char *linea2)
 {
 		unsigned int i;	// indice
-		// deseleccion de dispositivos conectado a P1-P2
-	P1= 0xEF;
-
-	// inicializacion del LCD
-	LCD_inicializar();
+LCD_borrar();
+	
 	// primera linea de texto
 	LCD_situar_cursor(1,1);	
 	for (i=0 ; i<16 ; i++)
 	{
 		LCD_escribir_caracter(linea1[i]);		// escritura caracter a caracter
-		LCD_retardo_ms(1);
+		LCD_retardo_ms(5);
 	}
 			
  	// segunda linea de texto
@@ -223,7 +220,7 @@ void LCD_BEGIN(char *linea1, char *linea2)
 	for (i=0 ; i<16 ; i++)
 	{
 		LCD_escribir_caracter(linea2[i]); 	// escritura caracter a caracter
-		LCD_retardo_ms(1);
+		LCD_retardo_ms(5);
 	}
 }
 

@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   MAIN                                                              05/29/2025 15:36:00 PAGE 1   
+C51 COMPILER V9.59.0.0   MAIN                                                              06/10/2025 14:54:10 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAIN
@@ -30,33 +30,40 @@ line level    source
   20          
   21          void main(void)
   22          {
-  23   1        unsigned int adc_val;
-  24   1        float volts;
+  23   1        unsigned char code linea1[16] = {' ','H','E','L','L','O',' ','B','A','R','C','E','L','O','N','A'};
+  24   1        unsigned char code linea2[16] = {' ','I','I','E','I','A',' ','2','0','2','4',' ',' ',' ',' ',' '};
   25   1      
-  26   1        //SPI_Init();
-  27   1        //MCP3302_Init();
-  28   1        
-  29   1        while(1)
-  30   1        {   
-  31   2        state_machine();
-  32   2          //adc_val = LTC_ReadChannel(0);
-  33   2          //volts = convert_to_voltage(adc_val);
-  34   2          //adc_val = MCP3302_ReadChannel(0);
-  35   2          //volts = MCP3302_ConvertToVoltage(adc_val);
-  36   2        }
-  37   1      }
-*** WARNING C280 IN LINE 23 OF main.c: 'adc_val': unreferenced local variable
-*** WARNING C280 IN LINE 24 OF main.c: 'volts': unreferenced local variable
-  38          
+  26   1      
+  27   1        LCD_inicializar();
+  28   1        LCD_borrar();
+  29   1        P1 = 0xFF;
+  30   1        P0 = 0xFF;
+  31   1        P2 = 0x00;
+  32   1      
+  33   1        while(1)
+  34   1        {         
+  35   2          LCD_situar_cursor(1,1); 
+  36   2          LCD_escribir_caracter('1');
+  37   2          delay(5);
+  38   2          LCD_situar_cursor(1,10);  
+  39   2          LCD_escribir_caracter('2');
+  40   2          delay(5);
+  41   2        }
+  42   1      }
+*** WARNING C280 IN LINE 23 OF main.c: 'linea1': unreferenced local variable
+*** WARNING C280 IN LINE 24 OF main.c: 'linea2': unreferenced local variable
+  43          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =      5    ----
-   CONSTANT SIZE    =   ----    ----
+   CODE SIZE        =     55    ----
+   CONSTANT SIZE    =     32    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       6
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
+C51 COMPILER V9.59.0.0   MAIN                                                              06/10/2025 14:54:10 PAGE 2   
+
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 

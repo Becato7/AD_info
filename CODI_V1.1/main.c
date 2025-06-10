@@ -20,19 +20,24 @@ sbit TRIG = P2^6;
 
 void main(void)
 {
-  unsigned int adc_val;
-  float volts;
+	unsigned char code linea1[16] = {' ','H','E','L','L','O',' ','B','A','R','C','E','L','O','N','A'};
+	unsigned char code linea2[16] = {' ','I','I','E','I','A',' ','2','0','2','4',' ',' ',' ',' ',' '};
 
-	//SPI_Init();
-	//MCP3302_Init();
-	
+
+	LCD_inicializar();
+	LCD_borrar();
+	P1 = 0xFF;
+	P0 = 0xFF;
+	P2 = 0x00;
+
 	while(1)
-	{ 	
-	state_machine();
-		//adc_val = LTC_ReadChannel(0);
-    //volts = convert_to_voltage(adc_val);
-		//adc_val = MCP3302_ReadChannel(0);
-		//volts = MCP3302_ConvertToVoltage(adc_val);
+	{ 				
+		LCD_situar_cursor(1,1);	
+		LCD_escribir_caracter('1');
+		delay(5);
+		LCD_situar_cursor(1,10);	
+		LCD_escribir_caracter('2');
+		delay(5);
   }
 }
 

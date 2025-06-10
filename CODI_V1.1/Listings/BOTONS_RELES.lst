@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   BOTONS_RELES                                                      05/29/2025 16:00:39 PAGE 1   
+C51 COMPILER V9.59.0.0   BOTONS_RELES                                                      05/31/2025 20:28:08 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE BOTONS_RELES
@@ -62,7 +62,7 @@ line level    source
   52          #define DOWN    4
   53          #define OK      5
   54          #define NONE    6
-C51 COMPILER V9.59.0.0   BOTONS_RELES                                                      05/29/2025 16:00:39 PAGE 2   
+C51 COMPILER V9.59.0.0   BOTONS_RELES                                                      05/31/2025 20:28:08 PAGE 2   
 
   55          
   56          #define SCREEN_MAX    5 // puede cambiar, ahora hay 4 pantallas (3+1)
@@ -126,7 +126,7 @@ line level    source
  114                          else if (FC_1 == 1) {  // Persiana completamente abierta -> Cerrar
  115                              VENT = 1;      // Activa el actuador para cerrar
  116                              while (FC_0 == 0){}  // Esperamos a que se cierre (final de carrera FC_0)
-C51 COMPILER V9.59.0.0   BOTONS_RELES                                                      05/29/2025 16:00:39 PAGE 3   
+C51 COMPILER V9.59.0.0   BOTONS_RELES                                                      05/31/2025 20:28:08 PAGE 3   
 
  117                              VENT = 0;      // Parar el actuador cuando se cierra completamente
  118                          }

@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   LCD                                                               05/27/2025 14:24:40 PAGE 1   
+C51 COMPILER V9.59.0.0   LCD                                                               06/06/2025 16:36:18 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE LCD
@@ -62,7 +62,7 @@ line level    source
   52   1        // comandos enviados son los mismos
   53   1        LCD_enviar_comando(0x28,0,TAM_INTERFAZ);  // Function set: N=1, F=0 -> 2 lineas, caracteres de 7*5 pixels
   54   1        LCD_esperar_BF();
-C51 COMPILER V9.59.0.0   LCD                                                               05/27/2025 14:24:40 PAGE 2   
+C51 COMPILER V9.59.0.0   LCD                                                               06/06/2025 16:36:18 PAGE 2   
 
   55   1        LCD_enviar_comando(0x08,0,TAM_INTERFAZ);  // Display Off
   56   1        LCD_esperar_BF();
@@ -126,7 +126,7 @@ line level    source
  112   1        LCD_esperar_BF();
  113   1      }
  114          
-C51 COMPILER V9.59.0.0   LCD                                                               05/27/2025 14:24:40 PAGE 3   
+C51 COMPILER V9.59.0.0   LCD                                                               06/06/2025 16:36:18 PAGE 3   
 
  115          
  116          /*-------------------------------------------------*/
@@ -190,7 +190,7 @@ line level    source
  174   1        else
  175   1        {
  176   2          // byte completo
-C51 COMPILER V9.59.0.0   LCD                                                               05/27/2025 14:24:40 PAGE 4   
+C51 COMPILER V9.59.0.0   LCD                                                               06/06/2025 16:36:18 PAGE 4   
 
  177   2          LCD = comando;
  178   2          
@@ -223,39 +223,34 @@ line level    source
  205          void LCD_BEGIN(char *linea1, char *linea2)
  206          {
  207   1          unsigned int i; // indice
- 208   1          // deseleccion de dispositivos conectado a P1-P2
- 209   1        P1= 0xEF;
- 210   1      
- 211   1        // inicializacion del LCD
- 212   1        LCD_inicializar();
- 213   1        // primera linea de texto
- 214   1        LCD_situar_cursor(1,1); 
- 215   1        for (i=0 ; i<16 ; i++)
- 216   1        {
- 217   2          LCD_escribir_caracter(linea1[i]);   // escritura caracter a caracter
- 218   2          LCD_retardo_ms(1);
- 219   2        }
- 220   1            
- 221   1        // segunda linea de texto
- 222   1        LCD_situar_cursor(2,1);               // ubica el cursor al inicio de segunda linea
- 223   1        for (i=0 ; i<16 ; i++)
- 224   1        {
- 225   2          LCD_escribir_caracter(linea2[i]);   // escritura caracter a caracter
- 226   2          LCD_retardo_ms(1);
- 227   2        }
- 228   1      }
- 229          
+ 208   1      LCD_borrar();
+ 209   1        
+ 210   1        // primera linea de texto
+ 211   1        LCD_situar_cursor(1,1); 
+ 212   1        for (i=0 ; i<16 ; i++)
+ 213   1        {
+ 214   2          LCD_escribir_caracter(linea1[i]);   // escritura caracter a caracter
+ 215   2          LCD_retardo_ms(5);
+ 216   2        }
+ 217   1            
+ 218   1        // segunda linea de texto
+ 219   1        LCD_situar_cursor(2,1);               // ubica el cursor al inicio de segunda linea
+ 220   1        for (i=0 ; i<16 ; i++)
+ 221   1        {
+ 222   2          LCD_escribir_caracter(linea2[i]);   // escritura caracter a caracter
+ 223   2          LCD_retardo_ms(5);
+ 224   2        }
+ 225   1      }
+ 226          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    382    ----
+   CODE SIZE        =    379    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----       8
    IDATA SIZE       =   ----    ----
-C51 COMPILER V9.59.0.0   LCD                                                               05/27/2025 14:24:40 PAGE 5   
-
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 

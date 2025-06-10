@@ -1,4 +1,3 @@
-
 #include <AT89C5131.h> 
 
 sbit LED_AIGUA = P2^1;

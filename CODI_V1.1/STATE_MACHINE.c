@@ -7,8 +7,8 @@ unsigned char desenes = 0;
 unsigned char unitats = 0;
 unsigned char decimal = 0;
 //MENU
-unsigned char code linea1[16] = {'M','E','N','U',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
-unsigned char code linea2[16] = {'<','-',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','>'};
+//unsigned char code linea1[16] = {'M','E','N','U',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
+//unsigned char code linea2[16] = {'<','-',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','>'};
 
 //TEMPERATURE SCREEN
 unsigned int temperatura_actual = 245;
@@ -88,7 +88,7 @@ void state_machine(void){
 		}
 		
 		if(PANTALLA == main_screen){
-			LCD_BEGIN(linea1, linea2);
+			//LCD_BEGIN(linea1, linea2);
 		}
 		else if(PANTALLA == temp_screen){
 			control_temp();
@@ -165,5 +165,5 @@ void state_machine(void){
 			}
 			LCD_BEGIN(linea9, linea10);
 		}
-		delay(50);
+		delay(100);
 }

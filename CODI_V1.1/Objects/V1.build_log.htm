@@ -23,10 +23,12 @@ Project File Date:  05/29/2025
 
 <h2>Output:</h2>
 Build target 'Target 1'
-compiling BOTONS_RELES.c...
+compiling main.c...
+main.c(23): warning C280: 'linea1': unreferenced local variable
+main.c(24): warning C280: 'linea2': unreferenced local variable
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?LCD_BORRAR?LCD
+    SEGMENT: ?CO?MAIN
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?SPI_INIT?LTC
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
@@ -41,9 +43,11 @@ linking...
     SEGMENT: ?PR?_MCP3302_CONVERTTOVOLTAGE?MCP
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?CONTROL_BOMBA_VENTILADOR?BOTONS_RELES
-Program Size: data=107.4 xdata=0 code=2374
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?STATE_MACHINE?STATE_MACHINE
+Program Size: data=101.4 xdata=0 code=2405
 creating hex file from ".\Objects\V1.1"...
-".\Objects\V1.1" - 0 Error(s), 8 Warning(s).
+".\Objects\V1.1" - 0 Error(s), 11 Warning(s).
 Build Time Elapsed:  00:00:01
 </pre>
 </body>
