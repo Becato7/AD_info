@@ -392,19 +392,19 @@
               <FilePath>.\BOTONS_RELES.c</FilePath>
             </File>
             <File>
-              <FileName>MCP.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MCP.c</FilePath>
-            </File>
-            <File>
               <FileName>STATE_MACHINE.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\STATE_MACHINE.c</FilePath>
             </File>
             <File>
-              <FileName>MCP.h</FileName>
+              <FileName>MCP3302.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCP3302.c</FilePath>
+            </File>
+            <File>
+              <FileName>MCP3302.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\MCP.h</FilePath>
+              <FilePath>.\MCP3302.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -11,11 +11,6 @@ void control_leds(bit senyal_riego, bit falta_agua){
 	LED_AIGUA = falta_agua;
 }
 
-void control_bomba_ventilador(bit ventilador, bit bomba){
-	RELE4 = bomba;
-	RELE3 = ventilador;
-}
-
 void control_porta(unsigned char control){
 	if(control == 1){					//Obrir la porta
 		control_leds(1, 1);

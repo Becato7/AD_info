@@ -1,6 +1,6 @@
 #include <AT89C5131.h>
 
-sbit SPI_CS   = P1^1;
+sbit SPI_CS   = P1^4;
 
 void SPI_Init(void);
 unsigned char SPI_Transfer(unsigned char value);

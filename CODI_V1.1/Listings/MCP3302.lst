@@ -1,0 +1,97 @@
+C51 COMPILER V9.59.0.0   MCP3302                                                           06/14/2025 13:01:31 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MCP3302
+OBJECT MODULE PLACED IN .\Objects\MCP3302.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE MCP3302.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\M
+                    -CP3302.lst) TABS(2) OBJECT(.\Objects\MCP3302.obj)
+
+line level    source
+
+   1          /* === MCP3302.c =================================== */
+   2          #include "MCP3302.h"
+   3          #include <intrins.h>
+   4          
+   5          
+   6          void MCP3302_InitPins(void) {
+   7   1          SPI_CS = 1;
+   8   1          SPI_CLK = 0;
+   9   1          SPI_MOSI = 0;
+  10   1          SPI_MISO = 1;
+  11   1      }
+  12          
+  13          static void spi_delay(void) {
+  14   1        /*  unsigned int i,j;
+  15   1          for (i=0;i<1;i++)
+  16   1          for (j=0;j<24;j++);*/
+  17   1        _nop_();
+  18   1        _nop_();
+  19   1      }
+  20          
+  21          void spi_write_bit(unsigned char b) {
+  22   1          SPI_MOSI = b;
+  23   1          SPI_CLK = 1; 
+  24   1          spi_delay();
+  25   1          SPI_CLK = 0; 
+  26   1          spi_delay();
+  27   1      }
+  28          
+  29          unsigned char spi_transfer_byte(unsigned char out) {
+  30   1          unsigned char in = 0;
+  31   1          signed char i;
+  32   1          for (i = 7; i >= 0; i--) {
+  33   2              spi_write_bit((out >> i) & 1);
+  34   2              in <<= 1;
+  35   2              in |= SPI_MISO;
+  36   2          }
+  37   1          return in;
+  38   1      }
+  39          
+  40          unsigned int MCP3302_ReadChannel(unsigned char ch) {
+  41   1          // Configuració del canal (single-ended):
+  42   1          // Start=1, SGL/DIFF=1, D2=0, D1/D0 = ch
+  43   1          unsigned char command = 0x18 | (ch & 0x03); // 0x18 = b00011000
+  44   1          
+  45   1          unsigned char rx_buf[3];
+  46   1          unsigned int result;
+  47   1          
+  48   1          SPI_CS = 0; // Activa CS (baix)
+  49   1      
+  50   1          // Transfereix 3 bytes
+  51   1          rx_buf[0] = spi_transfer_byte(command);  // Byte 1
+  52   1          rx_buf[1] = spi_transfer_byte(0x00);     // Byte 2
+  53   1          rx_buf[2] = spi_transfer_byte(0x00);     // Byte 3
+  54   1      
+C51 COMPILER V9.59.0.0   MCP3302                                                           06/14/2025 13:01:31 PAGE 2   
+
+  55   1          SPI_CS = 1; // Desactiva CS (alt)
+  56   1      
+  57   1          // Processa les dades rebudes
+  58   1          result = (rx_buf[1] & 0x3F);     // Agafa els 6 bits útils (màscara 00111111)
+  59   1          result = result << 6;             // Desplaça 6 posicions a l'esquerra
+  60   1          result |= (rx_buf[2] >> 2);       // Agafa els 6 bits alts del byte 3
+  61   1      
+  62   1          return result;
+  63   1      }
+  64          
+  65          unsigned int MCP3302_ReadChannel12(unsigned char ch) {
+  66   1          return MCP3302_ReadChannel(ch) & 0x0FFF;
+  67   1      }
+  68          
+  69          float MCP3302_ToVoltage(unsigned int adc12, float vref) {
+  70   1          return (vref * adc12) / 4096.0f;
+  71   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    168    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

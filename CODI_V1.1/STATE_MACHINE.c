@@ -1,11 +1,14 @@
 #include "STATE_MACHINE.h"
 #include "lcd.h"
 #include "BOTONS_RELES.h"
+#include "MCP3302.h"
 
 unsigned char PANTALLA = 0;
 unsigned char desenes = 0;
 unsigned char unitats = 0;
 unsigned char decimal = 0;
+unsigned int temperature_C = 0;
+
 //MENU
 unsigned char code linea1[16] = {'M','E','N','U',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
 unsigned char code linea2[16] = {'<','-',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','>'};
@@ -31,6 +34,23 @@ unsigned char linea8[16] = 			{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','
 unsigned char ventilator_mode = 0;
 unsigned char code linea9[16] = {'V','E','N','T','I','L','A','D','O','R',' ',' ',' ',' ',' ',' '};
 unsigned char linea10[16] = 		{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
+
+float fast_log(float x) {
+		float y;
+		float y2;
+    if (x <= 0.01) return -5.0;  // evitar inestabilitats extremes
+    y = (x - 1) / (x + 1);
+    y2 = y * y;
+    return 2 * y * (1 + y2 / 3);
+}
+
+unsigned int calcular_temperatura(unsigned int adc12) {
+    float voltatge = MCP3302_ToVoltage(adc12, 5.1);
+    float r_ntc = (voltatge * 10000.0) / (5.1 - voltatge);
+    float ln_ratio = fast_log(r_ntc / 10000.0);
+    float temp_K = 1.0 / ((1.0 / 298.15) + (1.0 / 3984.0) * ln_ratio);
+    return (unsigned int)((temp_K - 273.15) * 10);
+}
 
 void dividir_valor(unsigned int valor){
 		desenes = valor/100;
@@ -72,7 +92,7 @@ void control_motor(void){
 	}
 }
 
-void state_machine(unsigned char lectura){
+void state_machine(unsigned int lectura){
 		if(B_DOWN == 0){
 			PANTALLA++;
 			if(PANTALLA == 5){
@@ -92,7 +112,9 @@ void state_machine(unsigned char lectura){
 		}
 		else if(PANTALLA == temp_screen){
 			control_temp();
-			dividir_valor(lectura);
+			temperature_C = calcular_temperatura(lectura);
+			dividir_valor(temperature_C);
+
 			linea4[0] = desenes+0x30;
 			linea4[1] = unitats+0x30;
 			linea4[3] = decimal+0x30;
@@ -165,5 +187,5 @@ void state_machine(unsigned char lectura){
 			}
 			LCD_BEGIN(linea9, linea10);
 		}
-		delay(100);
+		delay(10);
 }

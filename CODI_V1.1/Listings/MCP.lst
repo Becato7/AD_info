@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   MCP                                                               06/10/2025 19:20:22 PAGE 1   
+C51 COMPILER V9.59.0.0   MCP                                                               06/12/2025 17:00:27 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MCP
@@ -62,7 +62,7 @@ line level    source
   52          
   53          // Converteix valor ADC a volts
   54          float MCP3302_ConvertToVoltage(unsigned int adc_value) {
-C51 COMPILER V9.59.0.0   MCP                                                               06/10/2025 19:20:22 PAGE 2   
+C51 COMPILER V9.59.0.0   MCP                                                               06/12/2025 17:00:27 PAGE 2   
 
   55   1        float vref = 5.0;
   56   1          return (vref * adc_value) / 8192.0; // 13 bits = 2^13 = 8192

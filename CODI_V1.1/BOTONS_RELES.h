@@ -19,5 +19,4 @@ sbit FC_0    = P0^5;		// persiana completamente abierta
 
 void delay(unsigned int ms);
 void control_leds(bit senyal_riego, bit falta_agua);
-void control_reles(bit ventilador, bit bomba);
 void control_porta(unsigned char control);
