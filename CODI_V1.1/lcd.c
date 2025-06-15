@@ -207,18 +207,18 @@ void LCD_BEGIN(char *linea1, char *linea2)
 		unsigned int i;	// indice
 	
 	// primera linea de texto
-	LCD_situar_cursor(1,1);	
-	for (i=0 ; i<16 ; i++)
+	LCD_situar_cursor(1,1);								//Situem el cursor a la posició 1 1 	
+	for (i=0 ; i<16 ; i++)								//Començem el bucle d'escriptura caracter a caracter
 	{
-		LCD_escribir_caracter(linea1[i]);		// escritura caracter a caracter
-		LCD_retardo_ms(5);
+		LCD_escribir_caracter(linea1[i]);		//Escriptura caracter a caracter
+		LCD_retardo_ms(5);									//Retard de 5ms entre caracter i caracter
 	}
 			
  	// segunda linea de texto
-	LCD_situar_cursor(2,1);								// ubica el cursor al inicio de segunda linea
-	for (i=0 ; i<16 ; i++)
+	LCD_situar_cursor(2,1);								//Situem el cursor a la posició 1 1 	
+	for (i=0 ; i<16 ; i++)								//Començem el bucle d'escriptura caracter a caracter
 	{
-		LCD_escribir_caracter(linea2[i]); 	// escritura caracter a caracter
-		LCD_retardo_ms(5);
+		LCD_escribir_caracter(linea2[i]); 	//Escriptura caracter a caracter
+		LCD_retardo_ms(5);									//Retard de 5ms entre caracter i caracter
 	}
 }

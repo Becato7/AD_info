@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   MAIN                                                              06/14/2025 13:11:06 PAGE 1   
+C51 COMPILER V9.59.0.0   MAIN                                                              06/15/2025 11:48:38 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAIN
@@ -16,33 +16,37 @@ line level    source
    6          /*****************************************************************************/
    7          
    8          
-   9          #include <AT89C5131.h> 
-  10          #include "lcd.h"
-  11          #include "STATE_MACHINE.h"
-  12          #include "BOTONS_RELES.h"
-  13          #include "MCP3302.h"
-  14          #define FOSC 12000000UL   // Defineix la freqüència del teu sistema (12 MHz típic)
+   9          #include <AT89C5131.h>      //Crida de la llibreria AT89C5131.h
+  10          #include "lcd.h"            //Crida de la llibreria lcd.h
+  11          #include "STATE_MACHINE.h"  //Crida de la llibreria STATE_MACHINE.h
+  12          #include "BOTONS_RELES.h"   //Crida de la llibreria BOTONS_RELES.h
+  13          #include "MCP3302.h"        //Crida de la llibreria MCP3302.h
+  14          #define FOSC 12000000UL     //Defineix la freqüència del sistema (12 MHz)
   15          
   16          void main(void)
   17          {
-  18   1        unsigned int adc_raw; 
-  19   1        LCD_inicializar();
-  20   1        LCD_borrar();
-  21   1        P0 = 0xFF;
-  22   1        P2 = 0x00;
-  23   1        P1 = 0x00;
-  24   1        MCP3302_InitPins(); 
-  25   1      
-  26   1        while(1){
-  27   2        adc_raw = MCP3302_ReadChannel12(1);
-  28   2        state_machine(adc_raw);
-  29   2        }
-  30   1      }
-  31          
+  18   1        unsigned int adc_raw;     //Declaració del valor llegit per l'ADC
+  19   1        LCD_inicializar();        //Crida de la funció d'inicialització de la LCD
+  20   1        LCD_borrar();             //Crida de la funció per netejar la LCD en cas que hi hagués algun caracter
+  21   1        P0 = 0xFF;                //Incicialitzem el port P0 a FF perquè son lectures de botons
+  22   1        P2 = 0x00;                //Inicialitzem el port P2 a 00
+  23   1        SPI_CS = 1;               //Inicialitzem el pin del CS de l'SPI a 1
+  24   1        SPI_CLK = 0;              //Inicialitzem el pin del clock de l'SPI a 0
+  25   1        SPI_MOSI = 0;             //Inicialitzem el pin de MOSI de l'SPI a 0, ja que serà la sortida d'informació
+  26   1        SPI_MISO = 1;             //Inicialitzem el pin de MISO de l'SPI a 1, ja que hem de preparar el pin per fer lec
+             -tures
+  27   1      
+  28   1        while(1){
+  29   2        adc_raw = MCP3302_ReadChannel12(1);   //Cridem la funció que llegeix els el valor de l'ADC, en aquest cas 
+             -volem el valor del canal 1 i guardem la informació a adc_raw
+  30   2        state_machine(adc_raw);               //Cridem la funció state machine i li entrem el valor de l'ADC
+  31   2        }
+  32   1      }
+  33          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     31    ----
+   CODE SIZE        =     34    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

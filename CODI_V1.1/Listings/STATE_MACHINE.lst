@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/14/2025 13:11:06 PAGE 1   
+C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/15/2025 11:48:38 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE STATE_MACHINE
@@ -8,213 +8,254 @@ COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE STATE_MACHINE.c OPTIMIZE(8,SPEED
 
 line level    source
 
-   1          #include "STATE_MACHINE.h"
-   2          #include "lcd.h"
-   3          #include "BOTONS_RELES.h"
-   4          #include "MCP3302.h"
+   1          #include "STATE_MACHINE.h"    //Crida de la llibreria STATE_MACHINE.h
+   2          #include "lcd.h"              //Crida de la llibreria lcd.h
+   3          #include "BOTONS_RELES.h"     //Crida de la llibreria BOTONS_RELES.h
+   4          #include "MCP3302.h"          //Crida de la llibreria MCP3302.h
    5          
-   6          unsigned char PANTALLA = 0;
-   7          unsigned char desenes = 0;
-   8          unsigned char unitats = 0;
-   9          unsigned char decimal = 0;
-  10          unsigned int temperature_C = 0;
-  11          
-  12          //MENU
-  13          unsigned char code linea1[16] = {'M','E','N','U',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
-  14          unsigned char code linea2[16] = {'<','-',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','>'};
-  15          
-  16          //TEMPERATURE SCREEN
-  17          unsigned int temperatura_actual = 245;
-  18          unsigned int temperatura_max = 320;
-  19          unsigned char code linea3[16] = {'T','E','M','P',':',' ',' ',' ','M','A','X','.','T',':',' ',' '};
-  20          unsigned char linea4[16] =      {' ',' ','.',' ','C',' ',' ',' ',' ',' ','.',' ','C',' ',' ',' '};
+   6          unsigned char PANTALLA = 0;           //Declaració de la variable PANTALLA on es guarda en quina pantalla es tr
+             -oba en temps real
+   7          unsigned char desenes = 0;            //Declaració de la variable desenes
+   8          unsigned char unitats = 0;            //Declaració de la variable unitats
+   9          unsigned char decimal = 0;            //Declaració de la variable decimal
+  10          unsigned int temperature_C = 0;       //Declaració de la variable temperature_C
+  11          unsigned int temperatura_actual = 0;  //Declaració de la variable temperatura_actual
+  12          unsigned int temperatura_max = 320;   //Declaració de la variable temperatura_max
+  13          unsigned int humitat_actual = 0;      //Declaració de la variable humitat_actual
+  14          unsigned int humitat_min = 320;       //Declaració de la variable humitat_min
+  15          unsigned char motor_mode = 0;         //Declaració de la variable motor_mode
+  16          unsigned char ventilator_mode = 0;    //Declaració de la variable ventilator_mode
+  17          unsigned char pump_mode = 0;          //Declaració de la variable pump_mode
+  18          bit estat_porta = 0;                  //Declaració de la variable estat_porta
+  19          unsigned char xdata linea4[16] =      {' ',' ','.',' ','C',' ',' ',' ',' ',' ','.',' ','C',' ',' ',' '}; //D
+             -eclaració de l'array linea4[16]
+  20          unsigned char xdata linea6[16] =      {' ',' ','.',' ','%',' ',' ',' ',' ',' ','.',' ','%',' ',' ',' '}; //D
+             -eclaració de l'array linea4[16]
   21          
-  22          //HUMIDITY SCREEN
-  23          unsigned int humitat_actual = 245;
-  24          unsigned int humitat_min = 320;
-  25          unsigned char code linea5[16] = {'H','U','M',':',' ',' ',' ',' ','M','I','N','.','H',':',' ',' '};
-  26          unsigned char linea6[16] =      {' ',' ','.',' ','%',' ',' ',' ',' ',' ','.',' ','%',' ',' ',' '};
-  27          
-  28          //MOTOR SCREEN
-  29          unsigned char motor_mode = 0;
-  30          unsigned char code linea7[16] = {'M','O','T','O','R',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
-  31          unsigned char linea8[16] =      {' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
-  32          
-  33          //VENTILATOR SCREEN
-  34          unsigned char ventilator_mode = 0;
-  35          unsigned char code linea9[16] = {'V','E','N','T','I','L','A','D','O','R',' ',' ',' ',' ',' ',' '};
-  36          unsigned char linea10[16] =     {' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
-  37          
-  38          float fast_log(float x) {
-  39   1          float y;
-  40   1          float y2;
-  41   1          if (x <= 0.01) return -5.0;  // evitar inestabilitats extremes
-  42   1          y = (x - 1) / (x + 1);
-  43   1          y2 = y * y;
-  44   1          return 2 * y * (1 + y2 / 3);
-  45   1      }
-  46          
-  47          unsigned int calcular_temperatura(unsigned int adc12) {
-  48   1          float voltatge = MCP3302_ToVoltage(adc12, 5.1);
-  49   1          float r_ntc = (voltatge * 10000.0) / (5.1 - voltatge);
-  50   1          float ln_ratio = fast_log(r_ntc / 10000.0);
-  51   1          float temp_K = 1.0 / ((1.0 / 298.15) + (1.0 / 3984.0) * ln_ratio);
-  52   1          return (unsigned int)((temp_K - 273.15) * 10);
-  53   1      }
-  54          
-C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/14/2025 13:11:06 PAGE 2   
+  22          
+  23          float fast_log(float x) {             //Deficinició de la funció fast_log que permet calcular logaritmes aproxim
+             -adament
+  24   1          float y;                          //Declaració de la variable y
+  25   1          float y2;                         //Declaració de la variable y2
+  26   1          if (x <= 0.01) return -5.0;       //Tornar un valor -5 si el numero a evaluar és molt petit per evitar p
+             -roblemes
+  27   1          y = (x - 1) / (x + 1);            //Interpolar
+  28   1          y2 = y * y;                       //Elevar al quadrat
+  29   1          return 2 * y * (1 + y2 / 3);      //Calcular el logaritme
+  30   1      }
+  31          
+  32          unsigned int calcular_temperatura(unsigned int adc12) {               //Deficinició de la funció calcular_tempera
+             -tura que permet calcular la temperatura en funció del valor de l'ADC que se li entri
+  33   1          float voltatge = MCP3302_ToVoltage(adc12, 5.1);                   //Passar del valor de l'adc al voltatje corre
+             -sponent amb la funció MCP3302_ToVoltage i el voltatje de referència a 5.1V
+  34   1          float r_ntc = (voltatge * 10000.0) / (5.1 - voltatge);            //Obtenció del valor de la resitència a pa
+             -rtir del voltatje del divisor de tenció sabent que l'altre resistència és de 10k i el voltatje de referència és de 5.1V
+  35   1          float ln_ratio = fast_log(r_ntc / 10000.0);                       //Càlcul del logaritme respecte el valor de lar
+             -esistència a 25ºC
+  36   1          float temp_K = 1.0 / ((1.0 / 298.15) + (1.0 / 3984.0) * ln_ratio);//Càlcul de la temperatura en graus 
+             -kelvin
+  37   1          return (unsigned int)((temp_K - 273.15) * 10);                    //Càlcul de la temperatura en graus celsius
+  38   1      }
+  39          
+  40          void dividir_valor(unsigned int valor){   //Definició de la funció dividir_valor
+  41   1          desenes = valor/100;                  //Asignació de les desenes
+  42   1          unitats = (valor/10)%10;              //Asignació de les unitats
+  43   1          decimal = valor%10;                   //Asignació de les decimal
+  44   1      }
+C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/15/2025 11:48:38 PAGE 2   
 
-  55          void dividir_valor(unsigned int valor){
-  56   1          desenes = valor/100;
-  57   1          unitats = (valor/10)%10;
-  58   1          decimal = valor%10;
-  59   1      }
-  60          
-  61          void control_temp(void){
-  62   1        if(B_RIGHT == 0){
-  63   2          temperatura_max++;
-  64   2        }else if(B_LEFT == 0){
-  65   2          temperatura_max--;
-  66   2        }
-  67   1      }
-  68          
-  69          void control_hum(void){
-  70   1        if(B_RIGHT == 0){
-  71   2          humitat_min++;
-  72   2        }else if(B_LEFT == 0){
-  73   2          humitat_min--;
+  45          
+  46          void control_temp(void){                  //Definició de la funció control_temp
+  47   1        if(B_RIGHT == 0){                       //Si s'apreta el boto right
+  48   2          temperatura_max++;                    //Augmenta la temperatura de llindar en 1 decima
+  49   2        }else if(B_LEFT == 0){                  //Si s'apreta el boto left
+  50   2          temperatura_max--;                    //Disminueix la temperatura llindar en 1 decima
+  51   2        }
+  52   1      }
+  53          
+  54          void control_hum(void){                   //Definició de la funció control_hum
+  55   1        if(B_RIGHT == 0){                       //Si s'apreta el boto right
+  56   2          humitat_min++;                        //Augmenta la humitat de llindar en 1 decima
+  57   2        }else if(B_LEFT == 0){                  //Si s'apreta el boto left
+  58   2          humitat_min--;                        //Disminueix la humitat llindar en 1 decima
+  59   2        }
+  60   1      }
+  61          
+  62          void control_vent(void){                  //Definició de la funció control_vent
+  63   1        if(B_OK == 0){                          //Si s'apreta el boto ok
+  64   2          ventilator_mode++;                    //Augmenta el mode del ventilador, entre OFF/ON/AUT
+  65   2        }
+  66   1        if(ventilator_mode == 3){               //Si passa del mode 2 (AUT)
+  67   2          ventilator_mode = 0;                  //Torna al mode 0 (OFF) 
+  68   2        }
+  69   1      }
+  70          
+  71          void control_motor(void){                 //Definició de la funció control_motor
+  72   1        if(B_RIGHT == 0){                       //Si s'apreta el boto right
+  73   2          motor_mode = 1;                       //Es va al mode 1 que fa obrir la finestra
   74   2        }
-  75   1      }
-  76          
-  77          void control_vent(void){
-  78   1        if(B_OK == 0){
-  79   2          ventilator_mode++;
-  80   2        }
-  81   1        if(ventilator_mode == 4){
-  82   2          ventilator_mode = 0;
-  83   2        }
-  84   1      }
-  85          
-  86          void control_motor(void){
-  87   1        if(B_OK == 0){
-  88   2          motor_mode++;
-  89   2        }
-  90   1        if(motor_mode == 4){
-  91   2          motor_mode = 0;
-  92   2        }
-  93   1      }
-  94          
-  95          void state_machine(unsigned int lectura){
-  96   1          if(B_DOWN == 0){
-  97   2            PANTALLA++;
-  98   2            if(PANTALLA == 5){
-  99   3              PANTALLA = main_screen;
- 100   3            }
- 101   2            delay(200);
- 102   2          }else if(B_UP == 0){
- 103   2            PANTALLA--;
- 104   2            if(PANTALLA == 255){
- 105   3              PANTALLA = ventilator_screen;
- 106   3            }
- 107   2            delay(200);
- 108   2          }
- 109   1          
- 110   1          if(PANTALLA == main_screen){
- 111   2            LCD_BEGIN(linea1, linea2);
- 112   2          }
- 113   1          else if(PANTALLA == temp_screen){
- 114   2            control_temp();
- 115   2            temperature_C = calcular_temperatura(lectura);
- 116   2            dividir_valor(temperature_C);
-C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/14/2025 13:11:06 PAGE 3   
+  75   1        if(B_LEFT == 0){                        //Si s'apreta el boto left
+  76   2          motor_mode = 2;                       //Es va al mode 2 que fa tancar la finestra
+  77   2        }
+  78   1        if(B_OK == 0){                          //Si s'apreta el boto ok
+  79   2          if(motor_mode == 0){                  //Si s'està en el mode OFF
+  80   3            motor_mode = 3;                     //Es va al mode AUT
+  81   3          }
+  82   2          if(motor_mode == 3){                  //Si s'està en el mode AUT
+  83   3            motor_mode = 0;                     //Es va al mode OFF
+  84   3          }
+  85   2        }
+  86   1      }
+  87          
+  88          void control_pump(void){                  //Definició de la funció control_pump
+  89   1        if(B_OK == 0){                          //Si s'apreta el boto ok
+  90   2          pump_mode++;                          //Augmenta el mode de la bomba, entre OFF/ON/AUT
+  91   2        }
+  92   1        if(pump_mode == 3){                     //Si passa del mode 2 (AUT)                   
+  93   2          pump_mode = 0;                        //Torna al mode 0 (OFF) 
+  94   2        }
+  95   1      }
+  96          
+  97          void control_reles(void){                 //Definició de la funció control_reles
+  98   1        switch(ventilator_mode){                //Evalua el mode de ventilator_mode
+  99   2          case 0:                               //Si és 0 (OFF)
+ 100   2            RELE3 = 0;                          //Agapa el ventilador
+ 101   2            break;
+ 102   2          case 1:                               //Si és 1 (ON)
+ 103   2            RELE3 = 1;                          //Engega el ventilador
+ 104   2            break;
+ 105   2          case 2:                               //Si és 2 (AUT)
+ 106   2            if(temperature_C >= temperatura_max){//Si la temperatura actual és més gran o igual a la llindar
+C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/15/2025 11:48:38 PAGE 3   
 
- 117   2      
- 118   2            linea4[0] = desenes+0x30;
- 119   2            linea4[1] = unitats+0x30;
- 120   2            linea4[3] = decimal+0x30;
- 121   2            dividir_valor(temperatura_max);
- 122   2            linea4[8] = desenes+0x30;
- 123   2            linea4[9] = unitats+0x30;
- 124   2            linea4[11] = decimal+0x30;
- 125   2            LCD_BEGIN(linea3, linea4);
- 126   2          }
- 127   1          else if(PANTALLA == hum_screen){
- 128   2            control_hum();
- 129   2            dividir_valor(humitat_actual);
- 130   2            linea6[0] = desenes+0x30;
- 131   2            linea6[1] = unitats+0x30;
- 132   2            linea6[3] = decimal+0x30;
- 133   2            dividir_valor(humitat_min);
- 134   2            linea6[8] = desenes+0x30;
- 135   2            linea6[9] = unitats+0x30;
- 136   2            linea6[11] = decimal+0x30;
- 137   2            LCD_BEGIN(linea5, linea6);
- 138   2          }
- 139   1          else if(PANTALLA == motor_screen){
- 140   2            control_motor();
- 141   2            if(motor_mode == 0){
- 142   3              linea8[0] = 'O';
- 143   3              linea8[1] = 'F';
- 144   3              linea8[2] = 'F';
- 145   3              linea8[3] = ' ';
- 146   3              LCD_BEGIN(linea7, linea8);
- 147   3              control_porta(0);
- 148   3            }else if(motor_mode == 1){
- 149   3              linea8[0] = 'U';
- 150   3              linea8[1] = 'P';
- 151   3              linea8[2] = ' ';
- 152   3              linea8[3] = ' ';
- 153   3              LCD_BEGIN(linea7, linea8);
- 154   3              control_porta(1);
- 155   3              motor_mode = 0;
- 156   3            }else if(motor_mode == 2){
- 157   3              linea8[0] = 'D';
- 158   3              linea8[1] = 'O';
- 159   3              linea8[2] = 'W';
- 160   3              linea8[3] = 'N';
- 161   3              LCD_BEGIN(linea7, linea8);
- 162   3              control_porta(2);
- 163   3              motor_mode = 0;
- 164   3            }
- 165   2            else if(motor_mode == 3){
- 166   3              linea8[0] = 'A';
- 167   3              linea8[1] = 'U';
- 168   3              linea8[2] = 'T';
- 169   3              linea8[3] = 'O';
- 170   3              LCD_BEGIN(linea7, linea8);
- 171   3            }
- 172   2          }
- 173   1          else if(PANTALLA == ventilator_screen){
- 174   2            control_vent();
- 175   2            if(ventilator_mode == 0){
- 176   3              linea10[1] = 'O';
- 177   3              linea10[2] = 'F';
- 178   3              linea10[3] = 'F';
-C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/14/2025 13:11:06 PAGE 4   
+ 107   3              RELE3 = 1;                        //Engega el ventilador
+ 108   3            if(estat_porta != 1){               //Si l'estat_porta és 0 (avall)
+ 109   4              control_porta(1);                 //Obrir la porta
+ 110   4              estat_porta = 1;                  //Posem l'estat_porta a 1 per indicar quie la porta està amunt
+ 111   4            }
+ 112   3            }else{                              //En cas contrari
+ 113   3              RELE3 = 0;                        //Apaga el ventilador
+ 114   3            if(estat_porta != 0){               //Si l'estat_porta és 1 (amunt)
+ 115   4              control_porta(2);                 //Tancar la porta
+ 116   4              estat_porta = 0;                  //Posem l'estat_porta a 1 per indicar quie la porta està avall
+ 117   4            }
+ 118   3            }
+ 119   2            break;
+ 120   2        }
+ 121   1        control_porta(0);                       //Quan acaba deixa el ventialor desconectat
+ 122   1      }
+ 123          
+ 124          void state_machine(unsigned int lectura){ //Declaració funció state_machine
+ 125   1        //MENU
+ 126   1      unsigned char code linea1[16] = "MENU            ";   //Deficinió array linea1
+ 127   1      unsigned char code linea2[16] = "<-            ->";   //Deficinió array linea2
+ 128   1      unsigned char code linea3[16] = "TEMP:   MAX.T:  ";   //Deficinió array linea3
+ 129   1      unsigned char code linea5[16] = "HUM:    MIN.H:  ";   //Deficinió array linea5
+ 130   1      unsigned char code linea7[16] = "MOTOR           ";   //Deficinió array linea7
+ 131   1      unsigned char code linea9[16] = "VENTILADOR      ";   //Deficinió array linea9
+ 132   1      unsigned char code linea10[16] = "BOMBA           ";  //Deficinió array linea10
+ 133   1      unsigned char code txt_OFF[16]  = "OFF             "; //Deficinió array txt_OFF
+ 134   1      unsigned char code txt_ON[16]   = "ON              "; //Deficinió array txt_ON
+ 135   1      unsigned char code txt_AUT[16]  = "AUT             "; //Deficinió array txt_AUT
+ 136   1      unsigned char code txt_DOWN[16]  = "DOWN            ";//Deficinió array txt_DOWN
+ 137   1      unsigned char code txt_UP[16]  = "UP              ";  //Deficinió array txt_UP
+ 138   1        temperature_C = calcular_temperatura(lectura);      //Evaluem el valor actual de la temperatura amb el valor
+             - de l'ADC que s'ha entrat a la funció
+ 139   1          if(B_DOWN == 0){                                  //Si es prem el boto down
+ 140   2            PANTALLA++;                                     //Augmenta l'estat de la pantalla
+ 141   2            if(PANTALLA == 6){                              //Si el valor de la pantalla supera el valor màxim de pantalles
+ 142   3              PANTALLA = main_screen;                       //Torna a la pantalla principal
+ 143   3            }
+ 144   2            delay(200);                                     //Delay de 200 ms per tenir temps de treure el dit del botó
+ 145   2          }else if(B_UP == 0){                              //Si es prem el boto up
+ 146   2            PANTALLA--;                                     //Decrementa l'estat de la pantalla
+ 147   2            if(PANTALLA == 255){                            //Si el valor de la pantalla supera el valor màxim de pantalles
+ 148   3              PANTALLA = pump_screen;                       //Torna a la pantalla pump_screen
+ 149   3            }
+ 150   2            delay(200);                                     //Delay de 200 ms per tenir temps de treure el dit del botó
+ 151   2          }
+ 152   1          if(PANTALLA == main_screen){                      //Si estàs a la pantalla main_screen
+ 153   2            LCD_BEGIN(linea1, linea2);
+ 154   2          }
+ 155   1          else if(PANTALLA == temp_screen){                 //Si estàs a la pantalla temp_screen
+ 156   2            control_temp();                                 //Cridem la funció de control_temp
+ 157   2            dividir_valor(temperature_C);                   //Apliquem la funció dividir valor a temperature_C
+ 158   2            linea4[0] = desenes+0x30;                       //Escrivim a linea4 les desenes
+ 159   2            linea4[1] = unitats+0x30;                       //Escrivim a linea4 les unitats
+ 160   2            linea4[3] = decimal+0x30;                       //Escrivim a linea4 el decimal
+ 161   2            dividir_valor(temperatura_max);                 //Apliquem la funció dividir valor a temperatura_max
+ 162   2            linea4[8] = desenes+0x30;                       //Escrivim a linea4 les desenes
+ 163   2            linea4[9] = unitats+0x30;                       //Escrivim a linea4 les unitats
+ 164   2            linea4[11] = decimal+0x30;                      //Escrivim a linea4 el decimal
+ 165   2            LCD_BEGIN(linea3, linea4);                      //Escrivim les linies linea3 i linea4
+ 166   2          }
+ 167   1          else if(PANTALLA == hum_screen){                  //Si estàs a la pantalla hum_screen
+C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/15/2025 11:48:38 PAGE 4   
 
- 179   3            }else if(ventilator_mode == 1){
- 180   3              linea10[1] = 'O';
- 181   3              linea10[2] = 'N';
- 182   3              linea10[3] = ' ';
- 183   3            }else if(ventilator_mode == 2){
- 184   3              linea10[1] = 'A';
- 185   3              linea10[2] = 'U';
- 186   3              linea10[3] = 'T';
- 187   3            }
- 188   2            LCD_BEGIN(linea9, linea10);
- 189   2          }
- 190   1          delay(10);
- 191   1      }
+ 168   2            control_hum();                                  //Cridem la funció de control_hum
+ 169   2            dividir_valor(humitat_actual);                  //Apliquem la funció dividir valor a humitat_actual
+ 170   2            linea6[0] = desenes+0x30;                       //Escrivim a linea6 les desenes
+ 171   2            linea6[1] = unitats+0x30;                       //Escrivim a linea6 les unitats
+ 172   2            linea6[3] = decimal+0x30;                       //Escrivim a linea6 el decimal
+ 173   2            dividir_valor(humitat_min);                     //Apliquem la funció dividir valor a humitat_min
+ 174   2            linea6[8] = desenes+0x30;                       //Escrivim a linea6 les desenes
+ 175   2            linea6[9] = unitats+0x30;                       //Escrivim a linea6 les unitats
+ 176   2            linea6[11] = decimal+0x30;                      //Escrivim a linea6 el decimal
+ 177   2            LCD_BEGIN(linea5, linea6);                      //Escrivim les linies linea5 i linea6
+ 178   2          }
+ 179   1          else if(PANTALLA == motor_screen){                //Si estàs a la pantalla motor_screen
+ 180   2            control_motor();                                //Cridem la funció de control_motor
+ 181   2            if(motor_mode == 0){                            //Si el motor_mode es 0
+ 182   3              LCD_BEGIN(linea7, txt_OFF);                   //Escrivim les linies linea7 i txt_OFF
+ 183   3              control_porta(0);
+ 184   3            }else if(motor_mode == 1){                      //Si el motor_mode es 1
+ 185   3              LCD_BEGIN(linea7, txt_UP);                    //Escrivim les linies linea7 i txt_UP
+ 186   3              control_porta(1);                             //Obrim la porta
+ 187   3              estat_porta = 1;                              //Delcarem la porta com amunt
+ 188   3              motor_mode = 0;                               //Tornem al motor_mode 0
+ 189   3            }else if(motor_mode == 2){                      //Si el motor_mode es 2
+ 190   3              LCD_BEGIN(linea7, txt_DOWN);                  //Escrivim les linies linea7 i txt_DOWN
+ 191   3              control_porta(2);                             //Tanquem la porta
+ 192   3              estat_porta = 0;                              //Delcarem la porta com avall
+ 193   3              motor_mode = 0;                               //Tornem al motor_mode 0
+ 194   3            }
+ 195   2            else if(motor_mode == 3){                       //Si el motor_mode es 3
+ 196   3              LCD_BEGIN(linea7, txt_AUT);                   //Escrivim les linies linea7 i txt_AUT
+ 197   3            }
+ 198   2          }
+ 199   1          else if(PANTALLA == ventilator_screen){           //Si estàs a la pantalla ventilator_screen
+ 200   2            control_vent();                                 //Cridem la funció de control_vent
+ 201   2            if(ventilator_mode == 0){                       //Si el ventilator_mode es 0
+ 202   3              LCD_BEGIN(linea9, txt_OFF);                   //Escrivim les linies linea9 i txt_OFF
+ 203   3            }else if(ventilator_mode == 1){                 //Si el ventilator_mode es 1
+ 204   3              LCD_BEGIN(linea9, txt_ON);                    //Escrivim les linies linea9 i txt_ON
+ 205   3            }else if(ventilator_mode == 2){                 //Si el ventilator_mode es 2
+ 206   3              LCD_BEGIN(linea9, txt_AUT);                   //Escrivim les linies linea9 i txt_AUT
+ 207   3            }
+ 208   2          }else if(PANTALLA == pump_screen){                //Si estàs a la pantalla pump_screen
+ 209   2            control_pump();                                 //Cridem la funció de control_pump
+ 210   2            if(pump_mode == 0){                             //Si el pump_mode es 0
+ 211   3              LCD_BEGIN(linea10, txt_OFF);                  //Escrivim les linies linea10 i txt_OFF
+ 212   3            }else if(pump_mode == 1){                       //Si el pump_mode es 1
+ 213   3              LCD_BEGIN(linea10, txt_ON);                   //Escrivim les linies linea10 i txt_ON
+ 214   3            }else if(pump_mode == 2){                       //Si el pump_mode es 2
+ 215   3              LCD_BEGIN(linea10, txt_AUT);                  //Escrivim les linies linea10 i txt_AUT
+ 216   3            }
+ 217   2          }
+ 218   1          control_reles();                                  //Apliquem el control dels reles
+ 219   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    960    ----
-   CONSTANT SIZE    =     96    ----
-   XDATA SIZE       =   ----    ----
+   CODE SIZE        =   1105    ----
+   CONSTANT SIZE    =    192    ----
+   XDATA SIZE       =     32    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     80      22
+   DATA SIZE        =     17      20
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =   ----    ----
+   BIT SIZE         =      1    ----
+C51 COMPILER V9.59.0.0   STATE_MACHINE                                                     06/15/2025 11:48:38 PAGE 5   
+
 END OF MODULE INFORMATION.
 
 

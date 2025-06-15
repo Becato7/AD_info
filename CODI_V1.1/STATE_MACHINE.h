@@ -1,16 +1,12 @@
-#include <AT89C5131.h> 
+#include <AT89C5131.h> 						//Crida de la llibreria AT89C5131.h
 
-#define main_screen 	0
-#define temp_screen 	1
-#define hum_screen 		2
-#define motor_screen 	3
-#define ventilator_screen 	4
+#define main_screen 	0						//Definim l'estat main_screen
+#define temp_screen 	1						//Definim l'estat temp_screen
+#define hum_screen 		2						//Definim l'estat hum_screen
+#define motor_screen 	3						//Definim l'estat motor_screen
+#define ventilator_screen 	4			//Definim l'estat ventilator_screen
+#define pump_screen 	5						//Definim l'estat pump_screen
 
-float fast_log(float x);
-unsigned int calcular_temperatura(unsigned int adc12);
-void dividir_valor(unsigned int valor);
-void control_temp(void);
-void control_hum(void);
-void control_vent(void);
-void control_motor(void);
-void state_machine(unsigned int lectura);
+float fast_log(float x);																//Declarem la funció fast_log(float x)
+unsigned int calcular_temperatura(unsigned int adc12);	//Declarem la funció calcular_temperatura(unsigned int adc12)
+void state_machine(unsigned int lectura);								//Declarem la funció state_machine(unsigned int lectura)

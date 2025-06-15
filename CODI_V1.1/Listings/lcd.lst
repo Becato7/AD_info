@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   LCD                                                               06/10/2025 19:12:07 PAGE 1   
+C51 COMPILER V9.59.0.0   LCD                                                               06/15/2025 11:48:38 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE LCD
@@ -62,7 +62,7 @@ line level    source
   52   1        // (lo gestiona LCD_enviar_comando), pero los
   53   1        // comandos enviados son los mismos
   54   1        LCD_enviar_comando(0x28,0,TAM_INTERFAZ);  // Function set: N=1, F=0 -> 2 lineas, caracteres de 7*5 pixels
-C51 COMPILER V9.59.0.0   LCD                                                               06/10/2025 19:12:07 PAGE 2   
+C51 COMPILER V9.59.0.0   LCD                                                               06/15/2025 11:48:38 PAGE 2   
 
   55   1        LCD_esperar_BF();
   56   1        LCD_enviar_comando(0x08,0,TAM_INTERFAZ);  // Display Off
@@ -126,7 +126,7 @@ line level    source
  112   1        LCD_enviar_comando(caracter,1,TAM_INTERFAZ);  // Write Data
  113   1        LCD_esperar_BF();
  114   1      }
-C51 COMPILER V9.59.0.0   LCD                                                               06/10/2025 19:12:07 PAGE 3   
+C51 COMPILER V9.59.0.0   LCD                                                               06/15/2025 11:48:38 PAGE 3   
 
  115          
  116          
@@ -190,7 +190,7 @@ line level    source
  174   1        // interfaz de 8 bits
  175   1        else
  176   1        {
-C51 COMPILER V9.59.0.0   LCD                                                               06/10/2025 19:12:07 PAGE 4   
+C51 COMPILER V9.59.0.0   LCD                                                               06/15/2025 11:48:38 PAGE 4   
 
  177   2          // byte completo
  178   2          LCD = comando;
@@ -225,19 +225,19 @@ line level    source
  207   1          unsigned int i; // indice
  208   1        
  209   1        // primera linea de texto
- 210   1        LCD_situar_cursor(1,1); 
- 211   1        for (i=0 ; i<16 ; i++)
+ 210   1        LCD_situar_cursor(1,1);               //Situem el cursor a la posició 1 1  
+ 211   1        for (i=0 ; i<16 ; i++)                //Començem el bucle d'escriptura caracter a caracter
  212   1        {
- 213   2          LCD_escribir_caracter(linea1[i]);   // escritura caracter a caracter
- 214   2          LCD_retardo_ms(5);
+ 213   2          LCD_escribir_caracter(linea1[i]);   //Escriptura caracter a caracter
+ 214   2          LCD_retardo_ms(5);                  //Retard de 5ms entre caracter i caracter
  215   2        }
  216   1            
  217   1        // segunda linea de texto
- 218   1        LCD_situar_cursor(2,1);               // ubica el cursor al inicio de segunda linea
- 219   1        for (i=0 ; i<16 ; i++)
+ 218   1        LCD_situar_cursor(2,1);               //Situem el cursor a la posició 1 1  
+ 219   1        for (i=0 ; i<16 ; i++)                //Començem el bucle d'escriptura caracter a caracter
  220   1        {
- 221   2          LCD_escribir_caracter(linea2[i]);   // escritura caracter a caracter
- 222   2          LCD_retardo_ms(5);
+ 221   2          LCD_escribir_caracter(linea2[i]);   //Escriptura caracter a caracter
+ 222   2          LCD_retardo_ms(5);                  //Retard de 5ms entre caracter i caracter
  223   2        }
  224   1      }
 
