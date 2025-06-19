@@ -15,7 +15,8 @@
 
 void main(void)
 {
-	unsigned int adc_raw; 		//Declaració del valor llegit per l'ADC
+	unsigned int temp; 		//Declaració del valor llegit per l'ADC
+	unsigned int hum; 		//Declaració del valor llegit per l'ADC
 	LCD_inicializar();				//Crida de la funció d'inicialització de la LCD
 	LCD_borrar();							//Crida de la funció per netejar la LCD en cas que hi hagués algun caracter
 	P0 = 0xFF;								//Incicialitzem el port P0 a FF perquè son lectures de botons
@@ -26,8 +27,9 @@ void main(void)
 	SPI_MISO = 1;							//Inicialitzem el pin de MISO de l'SPI a 1, ja que hem de preparar el pin per fer lectures
 
 	while(1){
-	adc_raw = MCP3302_ReadChannel12(1);		//Cridem la funció que llegeix els el valor de l'ADC, en aquest cas volem el valor del canal 1 i guardem la informació a adc_raw
-	state_machine(adc_raw);								//Cridem la funció state machine i li entrem el valor de l'ADC
+	temp = MCP3302_ReadChannel12(1);			//Cridem la funció que llegeix els el valor de l'ADC, en aquest cas volem el valor del canal 1 i guardem la informació a temp
+	hum = MCP3302_ReadChannel12(2);				//Cridem la funció que llegeix els el valor de l'ADC, en aquest cas volem el valor del canal 2 i guardem la informació a hum
+		state_machine(temp, hum);							//Cridem la funció state machine i li entrem el valor de l'ADC
 	}
 }
 

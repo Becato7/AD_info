@@ -9,4 +9,4 @@
 
 float fast_log(float x);																//Declarem la funció fast_log(float x)
 unsigned int calcular_temperatura(unsigned int adc12);	//Declarem la funció calcular_temperatura(unsigned int adc12)
-void state_machine(unsigned int lectura);								//Declarem la funció state_machine(unsigned int lectura)
+void state_machine(unsigned int temp, unsigned int hum);								//Declarem la funció state_machine(unsigned int lectura)

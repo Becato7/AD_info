@@ -37,6 +37,16 @@ unsigned int calcular_temperatura(unsigned int adc12) {								//Deficinició de 
     return (unsigned int)((temp_K - 273.15) * 10);										//Càlcul de la temperatura en graus celsius
 }
 
+unsigned int calcular_humitat(unsigned int adc12) {
+	float humitat;
+	float voltatge_llegit;
+    voltatge_llegit = MCP3302_ToVoltage(adc12, 5.0);  
+    if (voltatge_llegit > 4.3f) voltatge_llegit = 4.3f; //4.4 és el valor en sec i 2.1 és el valor quan estàr submergit
+    if (voltatge_llegit < 2.1f) voltatge_llegit = 2.1f;
+    humitat = (4.3f - voltatge_llegit) / (4.3f - 2.1f) * 100.0f;
+    return (unsigned int)(humitat*10);
+}
+
 void dividir_valor(unsigned int valor){		//Definició de la funció dividir_valor
 		desenes = valor/100;									//Asignació de les desenes
 		unitats = (valor/10)%10;							//Asignació de les unitats
@@ -68,7 +78,7 @@ void control_vent(void){									//Definició de la funció control_vent
 	}
 }
 
-void control_motor(void){									//Definició de la funció control_motor
+/*void control_motor(void){									//Definició de la funció control_motor
 	if(B_RIGHT == 0){												//Si s'apreta el boto right
 		motor_mode = 1;												//Es va al mode 1 que fa obrir la finestra
 	}
@@ -83,16 +93,16 @@ void control_motor(void){									//Definició de la funció control_motor
 			motor_mode = 0;											//Es va al mode OFF
 		}
 	}
-}
+}*/
 
-void control_pump(void){									//Definició de la funció control_pump
+/*void control_pump(void){									//Definició de la funció control_pump
 	if(B_OK == 0){													//Si s'apreta el boto ok
 		pump_mode++;													//Augmenta el mode de la bomba, entre OFF/ON/AUT
 	}
 	if(pump_mode == 3){											//Si passa del mode 2 (AUT)										
 		pump_mode = 0;												//Torna al mode 0 (OFF)	
 	}
-}
+}*/
 
 void control_reles(void){									//Definició de la funció control_reles
 	switch(ventilator_mode){								//Evalua el mode de ventilator_mode
@@ -121,21 +131,22 @@ void control_reles(void){									//Definició de la funció control_reles
 	control_porta(0);												//Quan acaba deixa el ventialor desconectat
 }
 
-void state_machine(unsigned int lectura){	//Declaració funció state_machine
+void state_machine(unsigned int temp, unsigned int hum){	//Declaració funció state_machine
 	//MENU
 unsigned char code linea1[16] = "MENU            ";		//Deficinió array linea1
 unsigned char code linea2[16] = "<-            ->";		//Deficinió array linea2
 unsigned char code linea3[16] = "TEMP:   MAX.T:  ";		//Deficinió array linea3
 unsigned char code linea5[16] = "HUM:    MIN.H:  ";		//Deficinió array linea5
-unsigned char code linea7[16] = "MOTOR           ";		//Deficinió array linea7
+//unsigned char code linea7[16] = "MOTOR           ";		//Deficinió array linea7
 unsigned char code linea9[16] = "VENTILADOR      ";		//Deficinió array linea9
-unsigned char code linea10[16] = "BOMBA           ";	//Deficinió array linea10
+//unsigned char code linea10[16] = "BOMBA           ";	//Deficinió array linea10
 unsigned char code txt_OFF[16]  = "OFF             ";	//Deficinió array txt_OFF
 unsigned char code txt_ON[16]   = "ON              ";	//Deficinió array txt_ON
 unsigned char code txt_AUT[16]  = "AUT             ";	//Deficinió array txt_AUT
-unsigned char code txt_DOWN[16]  = "DOWN            ";//Deficinió array txt_DOWN
-unsigned char code txt_UP[16]  = "UP              ";	//Deficinió array txt_UP
-	temperature_C = calcular_temperatura(lectura);			//Evaluem el valor actual de la temperatura amb el valor de l'ADC que s'ha entrat a la funció
+//unsigned char code txt_DOWN[16]  = "DOWN            ";//Deficinió array txt_DOWN
+//unsigned char code txt_UP[16]  = "UP              ";	//Deficinió array txt_UP
+	humitat_actual = calcular_humitat(hum);				//Evaluem el valor actual de la temperatura amb el valor de l'ADC que s'ha entrat a la funció
+	temperature_C = calcular_temperatura(temp);				//Evaluem el valor actual de la temperatura amb el valor de l'ADC que s'ha entrat a la funció
 		if(B_DOWN == 0){																	//Si es prem el boto down
 			PANTALLA++;																			//Augmenta l'estat de la pantalla
 			if(PANTALLA == 6){															//Si el valor de la pantalla supera el valor màxim de pantalles
@@ -177,7 +188,7 @@ unsigned char code txt_UP[16]  = "UP              ";	//Deficinió array txt_UP
 			LCD_BEGIN(linea5, linea6);											//Escrivim les linies linea5 i linea6
 		}
 		else if(PANTALLA == motor_screen){								//Si estàs a la pantalla motor_screen
-			control_motor();																//Cridem la funció de control_motor
+			/*control_motor();																//Cridem la funció de control_motor
 			if(motor_mode == 0){														//Si el motor_mode es 0
 				LCD_BEGIN(linea7, txt_OFF);										//Escrivim les linies linea7 i txt_OFF
 				control_porta(0);
@@ -194,7 +205,7 @@ unsigned char code txt_UP[16]  = "UP              ";	//Deficinió array txt_UP
 			}
 			else if(motor_mode == 3){												//Si el motor_mode es 3
 				LCD_BEGIN(linea7, txt_AUT);										//Escrivim les linies linea7 i txt_AUT
-			}
+			}*/
 		}
 		else if(PANTALLA == ventilator_screen){						//Si estàs a la pantalla ventilator_screen
 			control_vent();																	//Cridem la funció de control_vent
@@ -206,14 +217,14 @@ unsigned char code txt_UP[16]  = "UP              ";	//Deficinió array txt_UP
 				LCD_BEGIN(linea9, txt_AUT);										//Escrivim les linies linea9 i txt_AUT
 			}
 		}else if(PANTALLA == pump_screen){								//Si estàs a la pantalla pump_screen
-			control_pump();																	//Cridem la funció de control_pump
+			/*control_pump();																	//Cridem la funció de control_pump
 			if(pump_mode == 0){															//Si el pump_mode es 0
 				LCD_BEGIN(linea10, txt_OFF);									//Escrivim les linies linea10 i txt_OFF
 			}else if(pump_mode == 1){												//Si el pump_mode es 1
 				LCD_BEGIN(linea10, txt_ON);										//Escrivim les linies linea10 i txt_ON
 			}else if(pump_mode == 2){												//Si el pump_mode es 2
 				LCD_BEGIN(linea10, txt_AUT);									//Escrivim les linies linea10 i txt_AUT
-			}
+			}*/
 		}
 		control_reles();																	//Apliquem el control dels reles
 }
